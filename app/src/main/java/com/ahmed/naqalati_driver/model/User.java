@@ -12,6 +12,7 @@ public class User {
     private String userPasswrod;
     private Double lat;
     private Double lng;
+    private String currentRequest;
 
     public String getUserName() {
         return userName;
@@ -59,5 +60,13 @@ public class User {
 
     public void setLng(Double lng) {
         this.lng = lng;
+    }
+
+    public String getCurrentRequest() {
+        return currentRequest;
+    }
+
+    public void setCurrentRequest(String currentRequest) {
+        this.currentRequest = currentRequest;
     }
 }

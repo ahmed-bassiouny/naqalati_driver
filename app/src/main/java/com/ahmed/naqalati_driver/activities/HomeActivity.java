@@ -52,7 +52,6 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         findViewById();
         initObjects();
         onClick();
-        initLocationListener();
     }
 
     private void onClick() {
@@ -96,6 +95,12 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
         }else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestLocationPermission);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initLocationListener();
     }
 
     private void initObjects() {

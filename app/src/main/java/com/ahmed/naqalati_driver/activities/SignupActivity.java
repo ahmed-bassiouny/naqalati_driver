@@ -47,9 +47,9 @@ public class SignupActivity extends AppCompatActivity {
     private TextView tvChooseImage;
     private ProgressBar progress;
     private Button btnRegister;
-    private EditText etPhone, etPassword, etConfirmPassword, etName ,etCarNumber;
+    private EditText etPhone, etPassword, etConfirmPassword, etName, etCarNumber;
     private Spinner spCarType;
-    private final int requestLocationPermission =123;
+    private final int requestLocationPermission = 123;
 
     private Uri photoUri;
 
@@ -63,16 +63,16 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void requestLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED)
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestLocationPermission);
-        }
+    }
 
     private void onClick() {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(photoUri==null){
-                    Utils.showWarningDialog(SignupActivity.this,getString(R.string.invalid_image));
+                if (photoUri == null) {
+                    Utils.showWarningDialog(SignupActivity.this, getString(R.string.invalid_image));
                 } else if (etPhone.getText().toString().length() != 11) {
                     etPhone.setError(getString(R.string.enter_phone));
                 } else if (etPassword.getText().toString().length() < 6) {
@@ -81,9 +81,9 @@ public class SignupActivity extends AppCompatActivity {
                     etConfirmPassword.setError(getString(R.string.invalid_confirm_password));
                 } else if (etName.getText().toString().isEmpty()) {
                     etName.setError(getString(R.string.invalid_user_name));
-                }  else if (etCarNumber.getText().toString().length()<5) {
+                } else if (etCarNumber.getText().toString().length() < 5) {
                     etCarNumber.setError(getString(R.string.invalid_car_number));
-                }else {
+                } else {
                     if (Utils.isNetworkConnected(SignupActivity.this)) {
                         startSignup();
                         signUp();
@@ -102,7 +102,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void uploadImage() {
-        String userId =FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         StorageReference storageRef = FirebaseStorage.getInstance().getReference(userId);
         storageRef.putFile(photoUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -116,6 +116,8 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         stopSignup();
+                        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+                            FirebaseAuth.getInstance().signOut();
                         Utils.showErrorDialog(SignupActivity.this, exception.getLocalizedMessage());
                     }
                 });
@@ -137,9 +139,9 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Bitmap photoBitmap = ImagePicker.getImageFromResult(this, requestCode, resultCode, data);
-        if(photoBitmap!=null&&data!=null) {
+        if (photoBitmap != null && data != null) {
             profileImage.setImageBitmap(photoBitmap);
-            photoUri=data.getData();
+            photoUri = data.getData();
         }
     }
 
@@ -150,9 +152,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private void stopSignup() {
         progress.setVisibility(View.GONE);
-        btnRegister.setVisibility(View.VISIBLE);/*
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null)
-            FirebaseAuth.getInstance().signOut();*/
+        btnRegister.setVisibility(View.VISIBLE);
     }
 
 
@@ -166,19 +166,21 @@ public class SignupActivity extends AppCompatActivity {
         driver.setLng(0.0);
         driver.setCarNumber(etCarNumber.getText().toString());
         driver.setCarType(getCarTypeFromSpinner(spCarType.getSelectedItemPosition()));
-
+        driver.setCurrentRequest("");
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .setValue(driver).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     stopSignup();
                     Toast.makeText(SignupActivity.this, R.string.register_success, Toast.LENGTH_SHORT).show();
                     finish();
-                }else {
+                } else {
                     stopSignup();
-                    Utils.showWarningDialog(SignupActivity.this,getString(R.string.error));
+                    if (FirebaseAuth.getInstance().getCurrentUser() != null)
+                        FirebaseAuth.getInstance().signOut();
+                    Utils.showWarningDialog(SignupActivity.this, getString(R.string.error));
                 }
             }
         });
@@ -195,12 +197,14 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            /*UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(FirebaseRoot.DB_DRIVER).build();
-                            FirebaseAuth.getInstance().getCurrentUser().updateProfile(profileUpdates);*/
+                            FirebaseAuth.getInstance().getCurrentUser().updateProfile(profileUpdates);
                             uploadImage();
                         } else {
                             stopSignup();
+                            if (FirebaseAuth.getInstance().getCurrentUser() != null)
+                                FirebaseAuth.getInstance().signOut();
                             Utils.showErrorDialog(SignupActivity.this, task.getException().getLocalizedMessage());
                         }
                     }
@@ -210,17 +214,25 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode== requestLocationPermission &&grantResults[0]==PackageManager.PERMISSION_DENIED) {
+        if (requestCode == requestLocationPermission && grantResults[0] == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestLocationPermission);
         }
     }
-    private CarType getCarTypeFromSpinner(int position){
+
+    private CarType getCarTypeFromSpinner(int position) {
         CarType result;
-        switch (position){
-            case 0:result = CarType.FULL; break;
-            case 1:result = CarType.MEDIUM; break;
-            case 2:result = CarType.SMALL; break;
-            default: result = CarType.FULL;
+        switch (position) {
+            case 0:
+                result = CarType.FULL;
+                break;
+            case 1:
+                result = CarType.MEDIUM;
+                break;
+            case 2:
+                result = CarType.SMALL;
+                break;
+            default:
+                result = CarType.FULL;
         }
         return result;
     }
