@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">نقلتى</string>
+    <!-- sign in-->
+    <string name="number_phone">رقم التليفون</string>
+    <string name="password">كلمة السر</string>
+    <string name="submit">دخول</string>
+    <string name="newuser">هل انت مستخدم جديد ؟ تسجيل حساب</string>
+    <string name="phone_password_invalid">رقم التليفون او كلمة السر غير صحيح</string>
+
+    <!-- sign up-->
+    <string name="choose_image">اختيار صورة جديدة</string>
+    <string name="confirm_password">تأكيد كلمة السر</string>
+    <string name="user_name">اسم المستخدم</string>
+    <string name="register">تسجيل</string>
+    <string name="invalid_confirm_password">كلمة السر غير متطابقة</string>
+    <string name="invalid_user_name">برجاء ادخال اسم المستخدم</string>
+    <string name="invalid_image">برجاء اختيار صورة للحساب</string>
+    <string name="register_success">تم تسجيلك نجاح</string>
+
+    <!-- general-->
+    <string name="check_internet">من فضلك تاكد من اتصالك بالانترنت</string>
+    <string name="enter_phone">من فضلك ادخل رقم تليفون صحيح </string>
+    <string name="invalid_password">كلمة السر اقل من 6 حروف</string>
+    <string name="error">حدث خطا ما برجاء المحاولة مرة اخرى</string>
+    <string name="setting">الاعدادات</string>
+    <string name="open_gps">فتح خاصية تحديد الموقع من الاعدادات</string>
+    <string name="yes">موافق</string>
+    <string name="no">ارفض</string>
+    <string name="you_want_signout">هل تريد تسجيل الخروج ؟</string>
+    <string name="google_maps_key">AIzaSyDyU5o83wUPIcZ2XCW2MaRMG3rD5j84pJA</string>
+
+</resources>

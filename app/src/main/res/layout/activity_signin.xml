@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_logo"
+    android:layoutDirection="rtl"
+    android:textDirection="rtl"
+    tools:context="com.ahmed.naqalati_driver.activities.SigninActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:paddingTop="40dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/logo" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:padding="2dp"
+            android:background="@drawable/border_edit_text"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_phone"
+                android:drawableStart="@drawable/ic_phone"
+                android:inputType="phone"
+                android:digits="0123456789"
+                android:maxLines="1"
+                android:maxLength="11"
+                android:lines="1"
+                android:drawablePadding="5dp"
+                android:background="@android:color/transparent"
+                android:hint="@string/number_phone" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:padding="2dp"
+            android:background="@drawable/border_edit_text"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_password"
+                android:drawablePadding="5dp"
+                android:maxLines="1"
+                android:lines="1"
+                android:drawableStart="@drawable/ic_password"
+                android:inputType="textPassword"
+                android:background="@android:color/transparent"
+                android:hint="@string/password" />
+        </android.support.design.widget.TextInputLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_marginTop="50dp"
+            android:id="@+id/progress"/>
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:background="@drawable/border_button"
+            android:id="@+id/btn_submit" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/tv_new_user"
+            android:text="@string/newuser"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</FrameLayout>
