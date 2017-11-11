@@ -5,5 +5,5 @@ package com.ahmed.naqalati_driver.model;
  */
 
 public enum CarType {
-    FULL,MEDIUM
+    FULL,MEDIUM,SMALL
 }

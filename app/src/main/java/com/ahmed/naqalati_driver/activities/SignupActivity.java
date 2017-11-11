@@ -145,14 +145,14 @@ public class SignupActivity extends AppCompatActivity {
 
     private void startSignup() {
         progress.setVisibility(View.VISIBLE);
-        btnRegister.setEnabled(false);
+        btnRegister.setVisibility(View.GONE);
     }
 
     private void stopSignup() {
-        progress.setVisibility(View.INVISIBLE);
-        btnRegister.setEnabled(true);
+        progress.setVisibility(View.GONE);
+        btnRegister.setVisibility(View.VISIBLE);/*
         if(FirebaseAuth.getInstance().getCurrentUser()!=null)
-            FirebaseAuth.getInstance().signOut();
+            FirebaseAuth.getInstance().signOut();*/
     }
 
 
@@ -195,9 +195,9 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            /*UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(FirebaseRoot.DB_DRIVER).build();
-                            FirebaseAuth.getInstance().getCurrentUser().updateProfile(profileUpdates);
+                            FirebaseAuth.getInstance().getCurrentUser().updateProfile(profileUpdates);*/
                             uploadImage();
                         } else {
                             stopSignup();
@@ -219,6 +219,7 @@ public class SignupActivity extends AppCompatActivity {
         switch (position){
             case 0:result = CarType.FULL; break;
             case 1:result = CarType.MEDIUM; break;
+            case 2:result = CarType.SMALL; break;
             default: result = CarType.FULL;
         }
         return result;

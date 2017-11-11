@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_logo"
+    android:background="@drawable/driver"
     android:fillViewport="true"
     android:layoutDirection="rtl"
     android:textDirection="rtl"
@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
+        android:layout_marginTop="5dp"
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -34,7 +35,6 @@
             android:drawableStart="@drawable/ic_edit"
             android:gravity="center"
             android:id="@+id/tv_choose_image"
-            android:paddingBottom="30dp"
             android:text="@string/choose_image"
             android:textColor="@color/red_logo" />
 
@@ -142,7 +142,7 @@
             android:id="@+id/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
         <Button
             android:layout_width="200dp"
