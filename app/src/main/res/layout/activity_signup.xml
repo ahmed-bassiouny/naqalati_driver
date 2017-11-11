@@ -102,6 +102,42 @@
             android:minHeight="30dp"
             android:padding="5dp" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/border_edit_text"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_action_name"
+            android:hint="@string/car_number"
+            android:inputType="textPersonName"
+            android:lines="1"
+            android:id="@+id/et_car_number"
+            android:maxLines="1"
+            android:minHeight="30dp"
+            android:padding="5dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/car_type"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"/>
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/sp_car_type"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:entries="@array/car_type_value"
+            android:layout_margin="10dp">
+        </Spinner>
+        </LinearLayout>
         <ProgressBar
             android:id="@+id/progress"
             android:layout_width="wrap_content"

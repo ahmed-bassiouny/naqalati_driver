@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">نقلتى</string>
+    <string name="app_name">نقلتى سائق</string>
     <!-- sign in-->
     <string name="number_phone">رقم التليفون</string>
     <string name="password">كلمة السر</string>
@@ -15,7 +15,17 @@
     <string name="invalid_confirm_password">كلمة السر غير متطابقة</string>
     <string name="invalid_user_name">برجاء ادخال اسم المستخدم</string>
     <string name="invalid_image">برجاء اختيار صورة للحساب</string>
+    <string name="invalid_car_number">برجاء ادخال رقم السيارة بطريقة صحيحة </string>
     <string name="register_success">تم تسجيلك نجاح</string>
+    <string name="car_number">رقم السيارة</string>
+    <string name="car_type">نوع السيارة</string>
+    <array name="car_type_value">
+        <item>نقل</item>
+        <item>نص نقل</item>
+    </array>
+
+
+
 
     <!-- general-->
     <string name="check_internet">من فضلك تاكد من اتصالك بالانترنت</string>

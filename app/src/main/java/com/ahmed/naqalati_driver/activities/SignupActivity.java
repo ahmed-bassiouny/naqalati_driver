@@ -11,12 +11,17 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ahmed.naqalati_driver.model.CarType;
+import com.ahmed.naqalati_driver.model.Driver;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,7 +46,8 @@ public class SignupActivity extends AppCompatActivity {
     private TextView tvChooseImage;
     private ProgressBar progress;
     private Button btnRegister;
-    private EditText etPhone, etPassword, etConfirmPassword, etName;
+    private EditText etPhone, etPassword, etConfirmPassword, etName ,etCarNumber;
+    private Spinner spCarType;
     private final int requestLocationPermission =123;
 
     private Uri photoUri;
@@ -74,7 +80,9 @@ public class SignupActivity extends AppCompatActivity {
                     etConfirmPassword.setError(getString(R.string.invalid_confirm_password));
                 } else if (etName.getText().toString().isEmpty()) {
                     etName.setError(getString(R.string.invalid_user_name));
-                } else {
+                }  else if (etCarNumber.getText().toString().length()<5) {
+                    etCarNumber.setError(getString(R.string.invalid_car_number));
+                }else {
                     if (Utils.isNetworkConnected(SignupActivity.this)) {
                         startSignup();
                         signUp();
@@ -121,6 +129,8 @@ public class SignupActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_password);
         etConfirmPassword = findViewById(R.id.et_confirm_password);
         etName = findViewById(R.id.et_user_name);
+        etCarNumber = findViewById(R.id.et_car_number);
+        spCarType = findViewById(R.id.sp_car_type);
     }
 
     @Override
@@ -144,16 +154,19 @@ public class SignupActivity extends AppCompatActivity {
 
 
     private void createUserObject(String url) {
-        User user = new User();
-        user.setUserName(etName.getText().toString());
-        user.setUserPhone(etPhone.getText().toString());
-        user.setUserPasswrod(etPassword.getText().toString());
-        user.setUserAvatar(url);
-        user.setLat(0.0);
-        user.setLng(0.0);
-        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_USER)
+        Driver driver = new Driver();
+        driver.setUserName(etName.getText().toString());
+        driver.setUserPhone(etPhone.getText().toString());
+        driver.setUserPasswrod(etPassword.getText().toString());
+        driver.setUserAvatar(url);
+        driver.setLat(0.0);
+        driver.setLng(0.0);
+        driver.setCarNumber(etCarNumber.getText().toString());
+        driver.setCarType(getCarTypeFromSpinner(spCarType.getSelectedItemPosition()));
+
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .setValue(driver).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
@@ -194,5 +207,14 @@ public class SignupActivity extends AppCompatActivity {
         if(requestCode== requestLocationPermission &&grantResults[0]==PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestLocationPermission);
         }
+    }
+    private CarType getCarTypeFromSpinner(int position){
+        CarType result;
+        switch (position){
+            case 0:result = CarType.FULL; break;
+            case 1:result = CarType.MEDIUM; break;
+            default: result = CarType.FULL;
+        }
+        return result;
     }
 }

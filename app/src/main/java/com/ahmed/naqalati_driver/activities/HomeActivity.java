@@ -133,12 +133,12 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onLocationChanged(Location location) {
-        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_USER)
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(FirebaseRoot.DB_LAT)
                 .setValue(location.getLatitude());
 
-        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_USER)
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(FirebaseRoot.DB_LNG)
                 .setValue(location.getLongitude());
@@ -175,7 +175,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
             userMarker.remove();
         LatLng person = new LatLng(currentLat,currentLng);
         MarkerOptions markerOptions =new MarkerOptions().position(person).title("Person Name");
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.person_marker));
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker));
         userMarker= googleMap.addMarker(markerOptions);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(person));
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markerOptions.getPosition(), 15), 1000, null);
