@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ahmed.naqalati_driver.model.FirebaseRoot;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -105,7 +106,13 @@ public class SigninActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            if(user.getDisplayName().equals(FirebaseRoot.DB_DRIVER))
+                                updateUI(user);
+                            else {
+                                stopLogin();
+                                FirebaseAuth.getInstance().signOut();
+                                Utils.showErrorDialog(SigninActivity.this, getString(R.string.user_not_found));
+                            }
                         } else {
                             if (Utils.isNetworkConnected(SigninActivity.this)) {
                                 stopLogin();

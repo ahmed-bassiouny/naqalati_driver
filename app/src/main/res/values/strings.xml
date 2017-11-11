@@ -6,6 +6,7 @@
     <string name="submit">دخول</string>
     <string name="newuser">هل انت مستخدم جديد ؟ تسجيل حساب</string>
     <string name="phone_password_invalid">رقم التليفون او كلمة السر غير صحيح</string>
+    <string name="user_not_found">ﻻ يوجد هذا المستخدم</string>
 
     <!-- sign up-->
     <string name="choose_image">اختيار صورة جديدة</string>
