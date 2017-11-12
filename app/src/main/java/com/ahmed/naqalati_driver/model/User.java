@@ -47,6 +47,8 @@ public class User {
     }
 
     public Double getLat() {
+    	if(lat==null)
+    		lat=0.0;
         return lat;
     }
 
@@ -55,6 +57,8 @@ public class User {
     }
 
     public Double getLng() {
+    	if(lng==null)
+    		lng=0.0;
         return lng;
     }
 
@@ -63,6 +67,8 @@ public class User {
     }
 
     public String getCurrentRequest() {
+    	if(currentRequest==null)
+    		currentRequest="";
         return currentRequest;
     }
 

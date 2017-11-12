@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
@@ -30,21 +31,29 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ahmed.naqalati_driver.R;
 import com.ahmed.naqalati_driver.model.FirebaseRoot;
+import com.google.firebase.database.ValueEventListener;
 
-public class HomeActivity extends AppCompatActivity implements LocationListener ,OnMapReadyCallback{
+import java.util.EventListener;
+
+public class HomeActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
     SupportMapFragment mapFragment;
     LocationManager locationManager;
     ImageView signout;
     // local variable
-    private final int requestLocationPermission =123;
-    private double currentLat=0.0;
-    private double currentLng=0.0;
+    private final int requestLocationPermission = 123;
+    private double currentLat = 0.0;
+    private double currentLng = 0.0;
     GoogleMap googleMap;
     Marker userMarker;
+    ValueEventListener requestListener;
+    private String driverId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +83,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
                             @Override
                             public void exec() {
                                 FirebaseAuth.getInstance().signOut();
-                                startActivity(new Intent(HomeActivity.this,SigninActivity.class));
+                                startActivity(new Intent(HomeActivity.this, SigninActivity.class));
                                 finish();
                             }
                         })
@@ -90,9 +99,9 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
     private void initLocationListener() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,5000,0, this);
-            locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER,3000,0, this);
-        }else {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, this);
+        } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestLocationPermission);
         }
     }
@@ -105,33 +114,35 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
     private void initObjects() {
         mapFragment.getMapAsync(this);
-        locationManager=(LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+            driverId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     private void findViewById() {
-        mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
-        signout=findViewById(R.id.signout);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        signout = findViewById(R.id.signout);
 
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode== requestLocationPermission &&grantResults[0]==PackageManager.PERMISSION_DENIED) {
+        if (requestCode == requestLocationPermission && grantResults[0] == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestLocationPermission);
         }
     }
 
-    public void showSettingsAlert(){
+    public void showSettingsAlert() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle(getString(R.string.open_gps));
         alertDialog.setCancelable(false);
 
         alertDialog.setPositiveButton(getString(R.string.setting), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivity(intent);
-                    dialog.dismiss();
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+                dialog.dismiss();
             }
         });
         alertDialog.show();
@@ -140,7 +151,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onLocationChanged(Location location) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user==null)
+        if (user == null)
             return;
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(user.getUid())
@@ -151,8 +162,8 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
                 .child(user.getUid())
                 .child(FirebaseRoot.DB_LNG)
                 .setValue(location.getLongitude());
-        currentLat=location.getLatitude();
-        currentLng=location.getLongitude();
+        currentLat = location.getLatitude();
+        currentLng = location.getLongitude();
         setLocation();
     }
 
@@ -168,31 +179,70 @@ public class HomeActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onProviderDisabled(String provider) {
-          if(provider.equals(LocationManager.GPS_PROVIDER)){
+        if (provider.equals(LocationManager.GPS_PROVIDER)) {
             showSettingsAlert();
         }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        this.googleMap=googleMap;
+        this.googleMap = googleMap;
     }
-    private void setLocation(){
-        if(googleMap==null)
+
+    private void setLocation() {
+        if (googleMap == null)
             return;
-        if(userMarker!=null)
+        if (userMarker != null)
             userMarker.remove();
-        LatLng person = new LatLng(currentLat,currentLng);
-        MarkerOptions markerOptions =new MarkerOptions().position(person).title("Person Name");
+        LatLng person = new LatLng(currentLat, currentLng);
+        MarkerOptions markerOptions = new MarkerOptions().position(person).title("Person Name");
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker));
-        userMarker= googleMap.addMarker(markerOptions);
+        userMarker = googleMap.addMarker(markerOptions);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(person));
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markerOptions.getPosition(), 15), 1000, null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initRequestListener();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         locationManager.removeUpdates(this);
+        removeRequestListener();
+    }
+
+    private ValueEventListener getRequestListener() {
+        requestListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    int requestSize = (int) dataSnapshot.getChildrenCount();
+                    Toast.makeText(HomeActivity.this, "" + requestSize, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(HomeActivity.this, "000", Toast.LENGTH_SHORT).show();
+                }
+            }
+                @Override
+                public void onCancelled (DatabaseError databaseError){
+
+                }
+            }
+
+            ;
+        return requestListener;
+        }
+
+    private void initRequestListener() {
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
+                .child(driverId).child(FirebaseRoot.DB_PENDING_REQUEST).addValueEventListener(getRequestListener());
+    }
+
+    private void removeRequestListener() {
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
+                .child(driverId).child(FirebaseRoot.DB_PENDING_REQUEST).removeEventListener(requestListener);
     }
 }
