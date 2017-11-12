@@ -1,12 +1,16 @@
 package com.ahmed.naqalati_driver.helper;
 
+import android.app.Activity;
 import android.content.Context;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.widget.ImageView;
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeWarningDialog;
 import com.ahmed.naqalati_driver.R;
+import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
+import com.bumptech.glide.Glide;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -49,9 +53,26 @@ public class Utils {
                 .setCancelable(true)
                 .show();
     }
-    public static boolean gpsIsEnable(Context context){
-        LocationManager locationManager= (LocationManager) context.getSystemService(LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    public static void showImage(Context context, String url, ImageView imageView){
+        Glide.with(context).load(url)
+                .into(imageView);
+    }
+    public static void ContactSuppot(final Activity activity) {
+        AwesomeErrorDialog awesomeErrorDialog = new AwesomeErrorDialog(activity);
+        awesomeErrorDialog.setMessage(activity.getString(R.string.contact_suppoty))
+                .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                .setCancelable(true)
+                .setButtonText(activity.getString(R.string.yes))
+                .setButtonBackgroundColor(R.color.red_logo)
+                .setButtonTextColor(R.color.white)
+                .setErrorButtonClick(new Closure() {
+                    @Override
+                    public void exec() {
+                        activity.finish();
+                    }
+                })
+                .show();
     }
 
 }

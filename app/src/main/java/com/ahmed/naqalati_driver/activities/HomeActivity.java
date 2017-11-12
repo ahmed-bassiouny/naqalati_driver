@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
@@ -45,6 +46,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
     SupportMapFragment mapFragment;
     LocationManager locationManager;
     ImageView signout;
+    TextView tvRequestCount;
     // local variable
     private final int requestLocationPermission = 123;
     private double currentLat = 0.0;
@@ -95,6 +97,12 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
                         .show();
             }
         });
+        tvRequestCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this,ShowRequestsActivity.class));
+            }
+        });
     }
 
     private void initLocationListener() {
@@ -122,6 +130,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
     private void findViewById() {
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         signout = findViewById(R.id.signout);
+        tvRequestCount = findViewById(R.id.tv_request_count);
 
     }
 
@@ -221,20 +230,18 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
                     int requestSize = (int) dataSnapshot.getChildrenCount();
-                    Toast.makeText(HomeActivity.this, "" + requestSize, Toast.LENGTH_SHORT).show();
+                    tvRequestCount.setText(String.valueOf(requestSize));
                 } else {
-                    Toast.makeText(HomeActivity.this, "000", Toast.LENGTH_SHORT).show();
-                }
-            }
-                @Override
-                public void onCancelled (DatabaseError databaseError){
-
+                    tvRequestCount.setText("0");
                 }
             }
 
-            ;
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        };
         return requestListener;
-        }
+    }
 
     private void initRequestListener() {
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
