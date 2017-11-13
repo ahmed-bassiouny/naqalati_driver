@@ -42,7 +42,8 @@
             android:name="io.fabric.ApiKey"
             android:value="a07905da1fb4c784f0369b04a71691297ca15843" />
 
-        <activity android:name=".activities.ShowRequestsActivity"></activity>
+        <activity android:name=".activities.ShowRequestsActivity" />
+        <activity android:name=".activities.ShowRequestDetailsActivity"></activity>
     </application>
 
 </manifest>

@@ -31,11 +31,23 @@
         android:textSize="15sp"
         android:id="@+id/tv_phone"
         android:layout_marginStart="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/tv_phone"
+        android:layout_alignParentLeft="true"
+        android:gravity="left"
+        android:layout_below="@+id/tv_name"
+        android:text="@string/show_more"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:id="@+id/tv_show_details"
+        android:layout_marginStart="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
-        android:layout_margin="5dp"
+        android:layout_margin="15dp"
         android:layout_toEndOf="@+id/profile_image"
         android:layout_below="@+id/tv_phone">
         <Button

@@ -40,4 +40,8 @@
     <string name="contact_suppoty">حدث خطا ما برجاء التحدث مع الدعم</string>
     <string name="google_maps_key">AIzaSyDyU5o83wUPIcZ2XCW2MaRMG3rD5j84pJA</string>
 
+    <!-- item Request-->
+    <string name="show_more">مشاهدة التفاصيل كاملة </string>
+    <string name="start_point">عنوان البداية </string>
+    <string name="end_point">عنوان النهاية </string>
 </resources>

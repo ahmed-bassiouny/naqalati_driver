@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.ahmed.naqalati_driver.R;
 import com.ahmed.naqalati_driver.helper.Utils;
+import com.ahmed.naqalati_driver.model.ClickListener;
 import com.ahmed.naqalati_driver.model.RequestInfo;
 import com.ahmed.naqalati_driver.model.User;
 
@@ -24,15 +25,17 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
 
     private List<RequestInfo> requestInfoList;
     private Context context;
+    private ClickListener clickListener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvName, tvPhone;
+        public TextView tvName, tvPhone ,tvShowDetails;
         public CircleImageView profileImage;
 
         public MyViewHolder(View view) {
             super(view);
             tvName = view.findViewById(R.id.tv_name);
             tvPhone = view.findViewById(R.id.tv_phone);
+            tvShowDetails =view.findViewById(R.id.tv_show_details);
             profileImage=view.findViewById(R.id.profile_image);
         }
     }
@@ -41,6 +44,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
     public RequestAdapter(List<RequestInfo> requestInfoList,Context context) {
         this.requestInfoList = requestInfoList;
         this.context=context;
+        this.clickListener= (ClickListener) context;
     }
 
     @Override
@@ -53,11 +57,17 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        RequestInfo requestInfo = requestInfoList.get(position);
+        final RequestInfo requestInfo = requestInfoList.get(position);
         holder.tvName.setText(requestInfo.getUserName());
         holder.tvPhone.setText(requestInfo.getUserPhone());
         if(!requestInfo.getUserImage().isEmpty())
             Utils.showImage(context,requestInfo.getUserImage(),holder.profileImage);
+        holder.tvShowDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListener.onClick(requestInfo);
+            }
+        });
     }
 
     @Override

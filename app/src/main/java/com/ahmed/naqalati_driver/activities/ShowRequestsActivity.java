@@ -1,5 +1,6 @@
 package com.ahmed.naqalati_driver.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 
 import com.ahmed.naqalati_driver.R;
 import com.ahmed.naqalati_driver.adapter.RequestAdapter;
+import com.ahmed.naqalati_driver.helper.Constant;
 import com.ahmed.naqalati_driver.helper.Utils;
+import com.ahmed.naqalati_driver.model.ClickListener;
 import com.ahmed.naqalati_driver.model.FirebaseRoot;
 import com.ahmed.naqalati_driver.model.RequestInfo;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowRequestsActivity extends AppCompatActivity {
+public class ShowRequestsActivity extends AppCompatActivity implements ClickListener {
 
     private RecyclerView recyclerView;
     private String driverId;
@@ -61,5 +64,12 @@ public class ShowRequestsActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    @Override
+    public void onClick(RequestInfo requestInfo) {
+        Intent intent = new Intent(ShowRequestsActivity.this,ShowRequestDetailsActivity.class);
+        intent.putExtra(Constant.SHOW_REQUEST_INFO_DETAILS,requestInfo);
+        startActivity(intent);
     }
 }
