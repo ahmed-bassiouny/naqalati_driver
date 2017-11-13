@@ -203,8 +203,10 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
             return;
         if (userMarker != null)
             userMarker.remove();
+        if(currentLat==0||currentLng==0)
+            return;
         LatLng person = new LatLng(currentLat, currentLng);
-        MarkerOptions markerOptions = new MarkerOptions().position(person).title("Person Name");
+        MarkerOptions markerOptions = new MarkerOptions().position(person);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.car_marker));
         userMarker = googleMap.addMarker(markerOptions);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(person));
@@ -249,6 +251,8 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
     }
 
     private void removeRequestListener() {
+        if(requestListener==null)
+            return;
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(driverId).child(FirebaseRoot.DB_PENDING_REQUEST).removeEventListener(requestListener);
     }

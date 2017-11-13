@@ -78,6 +78,7 @@ public class ShowRequestsActivity extends AppCompatActivity implements RequestLi
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_USER)
                 .child(userId).child(FirebaseRoot.DB_REQUEST_STATUS)
                 .setValue(RequestStatus.ACCEPT);
+        finish();
     }
 
     @Override
@@ -85,5 +86,6 @@ public class ShowRequestsActivity extends AppCompatActivity implements RequestLi
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_USER)
                 .child(userId).child(FirebaseRoot.DB_REQUEST_STATUS)
                 .setValue(RequestStatus.REFUSE);
+        finish();
     }
 }
