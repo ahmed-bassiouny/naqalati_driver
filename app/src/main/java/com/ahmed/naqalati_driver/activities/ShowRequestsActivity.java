@@ -10,9 +10,10 @@ import com.ahmed.naqalati_driver.R;
 import com.ahmed.naqalati_driver.adapter.RequestAdapter;
 import com.ahmed.naqalati_driver.helper.Constant;
 import com.ahmed.naqalati_driver.helper.Utils;
-import com.ahmed.naqalati_driver.model.ClickListener;
+import com.ahmed.naqalati_driver.model.RequestListener;
 import com.ahmed.naqalati_driver.model.FirebaseRoot;
 import com.ahmed.naqalati_driver.model.RequestInfo;
+import com.ahmed.naqalati_driver.model.RequestStatus;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowRequestsActivity extends AppCompatActivity implements ClickListener {
+public class ShowRequestsActivity extends AppCompatActivity implements RequestListener {
 
     private RecyclerView recyclerView;
     private String driverId;
@@ -65,11 +66,24 @@ public class ShowRequestsActivity extends AppCompatActivity implements ClickList
                     }
                 });
     }
-
     @Override
-    public void onClick(RequestInfo requestInfo) {
+    public void showMore(RequestInfo requestInfo) {
         Intent intent = new Intent(ShowRequestsActivity.this,ShowRequestDetailsActivity.class);
         intent.putExtra(Constant.SHOW_REQUEST_INFO_DETAILS,requestInfo);
         startActivity(intent);
+    }
+
+    @Override
+    public void accept(String userId) {
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_USER)
+                .child(userId).child(FirebaseRoot.DB_REQUEST_STATUS)
+                .setValue(RequestStatus.ACCEPT);
+    }
+
+    @Override
+    public void refuse(String userId) {
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_USER)
+                .child(userId).child(FirebaseRoot.DB_REQUEST_STATUS)
+                .setValue(RequestStatus.REFUSE);
     }
 }

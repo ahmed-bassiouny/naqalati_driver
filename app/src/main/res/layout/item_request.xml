@@ -57,6 +57,7 @@
             android:text="@string/yes"
             android:textStyle="bold"
             android:layout_margin="5dp"
+            android:id="@+id/btn_accept"
             android:textColor="@color/white"
             android:background="@drawable/border_button"/>
         <Button
@@ -65,6 +66,7 @@
             android:text="@string/no"
             android:textStyle="bold"
             android:layout_margin="5dp"
+            android:id="@+id/btn_refuse"
             android:background="@drawable/border_button_white"
             android:layout_weight="1"/>
     </LinearLayout>

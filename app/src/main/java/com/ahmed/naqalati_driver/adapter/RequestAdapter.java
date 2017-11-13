@@ -5,13 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.ahmed.naqalati_driver.R;
 import com.ahmed.naqalati_driver.helper.Utils;
-import com.ahmed.naqalati_driver.model.ClickListener;
+import com.ahmed.naqalati_driver.model.RequestListener;
 import com.ahmed.naqalati_driver.model.RequestInfo;
-import com.ahmed.naqalati_driver.model.User;
 
 import java.util.List;
 
@@ -25,10 +25,11 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
 
     private List<RequestInfo> requestInfoList;
     private Context context;
-    private ClickListener clickListener;
+    private RequestListener requestListener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvName, tvPhone ,tvShowDetails;
+        public Button btnAccept,btnRefuse;
         public CircleImageView profileImage;
 
         public MyViewHolder(View view) {
@@ -37,6 +38,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
             tvPhone = view.findViewById(R.id.tv_phone);
             tvShowDetails =view.findViewById(R.id.tv_show_details);
             profileImage=view.findViewById(R.id.profile_image);
+            btnAccept=view.findViewById(R.id.btn_accept);
+            btnRefuse=view.findViewById(R.id.btn_refuse);
         }
     }
 
@@ -44,7 +47,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
     public RequestAdapter(List<RequestInfo> requestInfoList,Context context) {
         this.requestInfoList = requestInfoList;
         this.context=context;
-        this.clickListener= (ClickListener) context;
+        this.requestListener = (RequestListener) context;
     }
 
     @Override
@@ -65,7 +68,19 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
         holder.tvShowDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickListener.onClick(requestInfo);
+                requestListener.showMore(requestInfo);
+            }
+        });
+        holder.btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestListener.accept(requestInfo.getUserId());
+            }
+        });
+        holder.btnRefuse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestListener.refuse(requestInfo.getUserId());
             }
         });
     }
