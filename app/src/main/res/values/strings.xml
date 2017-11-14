@@ -45,4 +45,10 @@
     <string name="show_more">مشاهدة التفاصيل كاملة </string>
     <string name="start_point">عنوان البداية </string>
     <string name="end_point">عنوان النهاية </string>
+    <string name="waiting">من فضلك انتظر يتم تحميل البيانات </string>
+
+
+    <!--Home-->
+    <string name="arrived">تم الوصول</string>
+    <string name="cancel">الغاء العملية</string>
 </resources>

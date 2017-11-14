@@ -44,6 +44,7 @@ dependencies {
     compile 'com.github.Mariovc:ImagePicker:1.2.0'
     compile 'com.google.android.gms:play-services-maps:11.0.4'
     compile 'com.google.android.gms:play-services-location:11.0.4'
+    compile 'com.github.jd-alexander:library:1.1.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'jp.wasabeef:glide-transformations:3.0.1'
     testImplementation 'junit:junit:4.12'

@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:textDirection="rtl"
+    android:layoutDirection="rtl"
     tools:context="com.ahmed.naqalati_driver.activities.HomeActivity">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,4 +34,78 @@
         android:id="@+id/tv_request_count"
         android:background="@drawable/border_edit_text"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:layout_margin="20dp"
+        android:background="@drawable/border_button_white"
+        android:id="@+id/container">
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="90dp"
+            android:layout_margin="10dp"
+            android:layout_centerVertical="true"
+            android:layout_height="90dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/person"
+            app:civ_border_color="@color/red_logo"
+            app:civ_border_width="2dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            tools:text="name"
+            android:layout_toEndOf="@+id/profile_image"
+            android:id="@+id/tv_user_name"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_user_phone"
+            tools:text="phone"
+            android:layout_below="@+id/tv_user_name"
+            android:layout_toEndOf="@+id/profile_image"
+            android:textColor="@color/black" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="time"
+            android:layout_toEndOf="@+id/profile_image"
+            android:layout_below="@+id/tv_user_phone"
+            android:id="@+id/tv_time" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_time"
+            android:layout_toEndOf="@id/profile_image"
+            android:layout_centerHorizontal="true">
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="@string/arrived"
+                android:textStyle="bold"
+                android:layout_margin="5dp"
+                android:id="@+id/btn_arrived"
+                android:textColor="@color/white"
+                android:background="@drawable/border_button"/>
+            <Button
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="@string/cancel"
+                android:textStyle="bold"
+                android:layout_margin="5dp"
+                android:id="@+id/btn_cancel"
+                android:background="@drawable/border_button_white" />
+        </LinearLayout>
+    </RelativeLayout>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:id="@+id/progress"/>
 </RelativeLayout>
