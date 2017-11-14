@@ -92,5 +92,9 @@ public class Utils {
 
         notificationManager.notify(0, n.build());
     }
+    public static boolean isGpsEnable(Context context){
+        LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        return lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
 
 }

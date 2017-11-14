@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -20,10 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ahmed.naqalati_driver.helper.LocationManager;
 import com.ahmed.naqalati_driver.helper.Utils;
 import com.ahmed.naqalati_driver.model.Driver;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
         findViewById();
         initObjects();
         onClick();
-        getInfoFromDB();
+        //getInfoFromDB();
     }
 
     private void getInfoFromDB() {
@@ -78,9 +78,6 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
                         Driver driver = dataSnapshot.getValue(Driver.class);
                         if(driver==null)
                             return;
-                        currentLat=driver.getLat();
-                        currentLng=driver.getLng();
-                        setLocation();
                     }
 
                     @Override
@@ -130,24 +127,14 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
         });
     }
 
-    private void initLocationListener() {
+
+    private void initObjects() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, this);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, this);
+            locationManager= new LocationManager(this,this);
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestLocationPermission);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        initLocationListener();
-    }
-
-    private void initObjects() {
         mapFragment.getMapAsync(this);
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (FirebaseAuth.getInstance().getCurrentUser() != null)
             driverId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
@@ -183,42 +170,6 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null)
-            return;
-        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
-                .child(user.getUid())
-                .child(FirebaseRoot.DB_LAT)
-                .setValue(location.getLatitude());
-
-        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
-                .child(user.getUid())
-                .child(FirebaseRoot.DB_LNG)
-                .setValue(location.getLongitude());
-        currentLat = location.getLatitude();
-        currentLng = location.getLongitude();
-        setLocation();
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        if (provider.equals(LocationManager.GPS_PROVIDER)) {
-            showSettingsAlert();
-        }
-    }
-
-    @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
     }
@@ -242,13 +193,22 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
     protected void onResume() {
         super.onResume();
         initRequestListener();
+        if (!Utils.isGpsEnable(this)) {
+            showSettingsAlert();
+        }else {
+            locationManager.addListener();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        locationManager.removeUpdates(this);
         removeRequestListener();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        locationManager.removeListener(this);
     }
 
     private ValueEventListener getRequestListener() {
@@ -282,5 +242,24 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
             return;
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(driverId).child(FirebaseRoot.DB_PENDING_REQUEST).removeEventListener(requestListener);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null)
+            return;
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
+                .child(user.getUid())
+                .child(FirebaseRoot.DB_LAT)
+                .setValue(location.getLatitude());
+
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
+                .child(user.getUid())
+                .child(FirebaseRoot.DB_LNG)
+                .setValue(location.getLongitude());
+        currentLat = location.getLatitude();
+        currentLng = location.getLongitude();
+        setLocation();
     }
 }
