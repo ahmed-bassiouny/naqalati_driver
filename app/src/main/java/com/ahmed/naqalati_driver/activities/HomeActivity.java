@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ahmed.naqalati_driver.helper.Utils;
+import com.ahmed.naqalati_driver.model.Driver;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -64,6 +65,29 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
         findViewById();
         initObjects();
         onClick();
+        getInfoFromDB();
+    }
+
+    private void getInfoFromDB() {
+        if(driverId.isEmpty())
+            return;
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER).child(driverId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Driver driver = dataSnapshot.getValue(Driver.class);
+                        if(driver==null)
+                            return;
+                        currentLat=driver.getLat();
+                        currentLng=driver.getLng();
+                        setLocation();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 
     private void onClick() {
