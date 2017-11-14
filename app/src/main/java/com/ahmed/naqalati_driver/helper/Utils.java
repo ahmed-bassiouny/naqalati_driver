@@ -1,9 +1,13 @@
 package com.ahmed.naqalati_driver.helper;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.support.v4.app.NotificationCompat;
 import android.widget.ImageView;
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
@@ -73,6 +77,20 @@ public class Utils {
                     }
                 })
                 .show();
+    }
+    public static void showNotificationAboutNewRequest(Context context){
+        NotificationCompat.Builder n  = new NotificationCompat.Builder(context,"default");
+        n.setContentTitle(context.getString(R.string.app_name));
+        n.setContentText(context.getString(R.string.new_request));
+        n.setSmallIcon(R.drawable.logo);
+        n.setDefaults(Notification.DEFAULT_SOUND);
+        n.setAutoCancel(true);
+
+
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+
+        notificationManager.notify(0, n.build());
     }
 
 }

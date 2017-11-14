@@ -36,6 +36,7 @@
     <string name="open_gps">فتح خاصية تحديد الموقع من الاعدادات</string>
     <string name="yes">موافق</string>
     <string name="no">ارفض</string>
+    <string name="new_request">لديك طلب توصيل جديد</string>
     <string name="you_want_signout">هل تريد تسجيل الخروج ؟</string>
     <string name="contact_suppoty">حدث خطا ما برجاء التحدث مع الدعم</string>
     <string name="google_maps_key">AIzaSyDyU5o83wUPIcZ2XCW2MaRMG3rD5j84pJA</string>

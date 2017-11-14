@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ahmed.naqalati_driver.helper.Utils;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -232,6 +233,8 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
                     int requestSize = (int) dataSnapshot.getChildrenCount();
+                    if(requestSize>0)
+                        Utils.showNotificationAboutNewRequest(HomeActivity.this);
                     tvRequestCount.setText(String.valueOf(requestSize));
                 } else {
                     tvRequestCount.setText("0");
