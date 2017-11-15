@@ -21,6 +21,7 @@ import com.ahmed.naqalati_driver.R;
 import com.ahmed.naqalati_driver.helper.Utils;
 
 import io.fabric.sdk.android.Fabric;
+
 import java.util.Calendar;
 
 public class SigninActivity extends AppCompatActivity {
@@ -80,15 +81,8 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        if(day!=15) {
-            startActivity(new Intent(SigninActivity.this, ExpiredActivity.class));
-            finish();
-        }else {
-            FirebaseUser currentUser = mAuth.getCurrentUser();
-            updateUI(currentUser);
-        }
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
     }
 
     private void updateUI(FirebaseUser currentUser) {
@@ -106,7 +100,7 @@ public class SigninActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            if(user.getDisplayName()!=null &&user.getDisplayName().equals(FirebaseRoot.DB_DRIVER))
+                            if (user.getDisplayName() != null && user.getDisplayName().equals(FirebaseRoot.DB_DRIVER))
                                 updateUI(user);
                             else {
                                 stopLogin();

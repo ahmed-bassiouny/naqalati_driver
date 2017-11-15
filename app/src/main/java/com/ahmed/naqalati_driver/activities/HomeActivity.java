@@ -122,32 +122,8 @@ public class HomeActivity extends AppCompatActivity implements
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AwesomeInfoDialog(HomeActivity.this)
-                        .setTitle(R.string.app_name)
-                        .setMessage(R.string.you_want_signout)
-                        .setColoredCircle(R.color.dialogInfoBackgroundColor)
-                        .setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white)
-                        .setCancelable(true)
-                        .setPositiveButtonText(getString(R.string.yes))
-                        .setPositiveButtonbackgroundColor(R.color.red_logo)
-                        .setPositiveButtonTextColor(R.color.white)
-                        .setNegativeButtonText(getString(R.string.no))
-                        .setNegativeButtonbackgroundColor(R.color.dialogInfoBackgroundColor)
-                        .setNegativeButtonTextColor(R.color.white)
-                        .setPositiveButtonClick(new Closure() {
-                            @Override
-                            public void exec() {
-                                FirebaseAuth.getInstance().signOut();
-                                startActivity(new Intent(HomeActivity.this, SigninActivity.class));
-                                finish();
-                            }
-                        })
-                        .setNegativeButtonClick(new Closure() {
-                            @Override
-                            public void exec() {
-                            }
-                        })
-                        .show();
+                startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
+                finish();
             }
         });
         tvRequestCount.setOnClickListener(new View.OnClickListener() {

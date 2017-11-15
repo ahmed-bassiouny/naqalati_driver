@@ -18,7 +18,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_signout"
+        android:src="@drawable/person"
         android:layout_margin="10dp"
         android:id="@+id/signout"
         android:layout_alignParentRight="true"

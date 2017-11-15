@@ -54,4 +54,6 @@
     <string name="user_cancel">تم الغاء العملية من قبل المستخدم</string>
     <string name="driver_cancel">تم الغاء العملية من قبل السائق</string>
     <string name="complete">تم اكتمال العملية بنجاح</string>
+    <string name="edit">تعديل</string>
+    <string name="signout">خروج</string>
 </resources>
