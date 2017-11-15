@@ -51,4 +51,7 @@
     <!--Home-->
     <string name="arrived">تم الوصول</string>
     <string name="cancel">الغاء العملية</string>
+    <string name="user_cancel">تم الغاء العملية من قبل المستخدم</string>
+    <string name="driver_cancel">تم الغاء العملية من قبل السائق</string>
+    <string name="complete">تم اكتمال العملية بنجاح</string>
 </resources>

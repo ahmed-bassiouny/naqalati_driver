@@ -58,7 +58,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity implements
-        LocationListener, OnMapReadyCallback{
+        LocationListener, OnMapReadyCallback {
 
     SupportMapFragment mapFragment;
     LocationManager locationManager;
@@ -74,14 +74,14 @@ public class HomeActivity extends AppCompatActivity implements
     ValueEventListener requestListener;
     ValueEventListener currentRequestListener;
     private String driverId;
-    private String currentRequest="";
+    private String currentRequest = "";
 
     private RelativeLayout container;
     private CircleImageView profileImage;
     private TextView tvUserName;
     private TextView tvUserPhone;
     private TextView tvTime;
-    private Button btnArrived,btnCancel;
+    private Button btnArrived, btnCancel;
     private ProgressBar progress;
 
     @Override
@@ -94,17 +94,19 @@ public class HomeActivity extends AppCompatActivity implements
     }
 
     private void getInfoFromDB() {
-        if(driverId.isEmpty())
+        if (driverId.isEmpty())
             return;
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER).child(driverId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Driver driver = dataSnapshot.getValue(Driver.class);
-                        if(driver==null)
+                        if (driver == null)
                             return;
-                        if(!driver.getCurrentRequest().isEmpty()){
-                            currentRequest=driver.getCurrentRequest();
+                        if (!driver.getCurrentRequest().isEmpty()) {
+                            progress.setVisibility(View.VISIBLE);
+                            Toast.makeText(HomeActivity.this, R.string.waiting, Toast.LENGTH_SHORT).show();
+                            currentRequest = driver.getCurrentRequest();
                             addListenerOnCurrentRequest();
                         }
                     }
@@ -151,7 +153,7 @@ public class HomeActivity extends AppCompatActivity implements
         tvRequestCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,ShowRequestsActivity.class));
+                startActivity(new Intent(HomeActivity.this, ShowRequestsActivity.class));
             }
         });
         btnArrived.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +178,7 @@ public class HomeActivity extends AppCompatActivity implements
 
     private void initObjects() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager= new LocationManager(this,this);
+            locationManager = new LocationManager(this, this);
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestLocationPermission);
         }
@@ -196,7 +198,7 @@ public class HomeActivity extends AppCompatActivity implements
         tvTime = findViewById(R.id.tv_time);
         btnArrived = findViewById(R.id.btn_arrived);
         btnCancel = findViewById(R.id.btn_cancel);
-        progress=findViewById(R.id.progress);
+        progress = findViewById(R.id.progress);
 
     }
 
@@ -205,6 +207,8 @@ public class HomeActivity extends AppCompatActivity implements
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == requestLocationPermission && grantResults[0] == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestLocationPermission);
+        }else if (requestCode == requestLocationPermission && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            locationManager = new LocationManager(this, this);
         }
     }
 
@@ -233,7 +237,7 @@ public class HomeActivity extends AppCompatActivity implements
             return;
         if (userMarker != null)
             userMarker.remove();
-        if(currentLat==0||currentLng==0)
+        if (currentLat == 0 || currentLng == 0)
             return;
         LatLng person = new LatLng(currentLat, currentLng);
         MarkerOptions markerOptions = new MarkerOptions().position(person);
@@ -253,7 +257,8 @@ public class HomeActivity extends AppCompatActivity implements
         getInfoFromDB();
         if (!Utils.isGpsEnable(this)) {
             showSettingsAlert();
-        }else {
+        } else {
+            if(locationManager!=null)
             locationManager.addListener();
         }
     }
@@ -262,12 +267,13 @@ public class HomeActivity extends AppCompatActivity implements
     protected void onStop() {
         super.onStop();
         removeRequestListener();
-        removeListenerOnCurrentRequest();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         locationManager.removeListener(this);
+        removeListenerOnCurrentRequest();
     }
 
     private ValueEventListener getRequestListener() {
@@ -276,7 +282,7 @@ public class HomeActivity extends AppCompatActivity implements
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
                     int requestSize = (int) dataSnapshot.getChildrenCount();
-                    if(requestSize>0)
+                    if (requestSize > 0)
                         Utils.showNotificationAboutNewRequest(HomeActivity.this);
                     tvRequestCount.setText(String.valueOf(requestSize));
                 } else {
@@ -297,7 +303,7 @@ public class HomeActivity extends AppCompatActivity implements
     }
 
     private void removeRequestListener() {
-        if(requestListener==null)
+        if (requestListener == null)
             return;
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(driverId).child(FirebaseRoot.DB_PENDING_REQUEST).removeEventListener(requestListener);
@@ -321,23 +327,23 @@ public class HomeActivity extends AppCompatActivity implements
         currentLng = location.getLongitude();
         setLocation();
     }
-    private ValueEventListener getListenerOnCurrentRequest(){
-        currentRequestListener= new ValueEventListener() {
+
+    private ValueEventListener getListenerOnCurrentRequest() {
+        currentRequestListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 RequestInfo requestInfo = dataSnapshot.getValue(RequestInfo.class);
-                if(requestInfo.getRequestStatus()== RequestStatus.DRIVER_GO_TO_START_POINT) {
-                    progress.setVisibility(View.VISIBLE);
-                    Toast.makeText(HomeActivity.this,R.string.waiting, Toast.LENGTH_SHORT).show();
+                if (requestInfo.getRequestStatus() == RequestStatus.DRIVER_GO_TO_START_POINT) {
                     container.setVisibility(View.VISIBLE);
+                    btnArrived.setVisibility(View.VISIBLE);
                     setUserInfo(requestInfo);
                     googleMap.clear();
                     setLocation();
-                    final LatLng driverLocation = new LatLng(requestInfo.getDriverLat(),requestInfo.getDriverLng());
-                    final LatLng startPointLocation = new LatLng(requestInfo.getStartPoint().getLat(),requestInfo.getStartPoint().getLng());
+                    final LatLng driverLocation = new LatLng(requestInfo.getDriverLat(), requestInfo.getDriverLng());
+                    final LatLng startPointLocation = new LatLng(requestInfo.getStartPoint().getLat(), requestInfo.getStartPoint().getLng());
                     Routing routing = new Routing.Builder()
                             .travelMode(Routing.TravelMode.DRIVING)
-                            .waypoints(driverLocation,startPointLocation)
+                            .waypoints(driverLocation, startPointLocation)
                             .withListener(new RoutingListener() {
                                 @Override
                                 public void onRoutingFailure(RouteException e) {
@@ -351,10 +357,10 @@ public class HomeActivity extends AppCompatActivity implements
 
                                 @Override
                                 public void onRoutingSuccess(ArrayList<Route> arrayList, int shortestRouteIndex) {
-                                    ArrayList polylines =new ArrayList<>();
-                                    String totalTime="";
+                                    ArrayList polylines = new ArrayList<>();
+                                    String totalTime = "";
                                     //add route(s) to the map.
-                                    for (int i = 0; i <arrayList.size(); i++) {
+                                    for (int i = 0; i < arrayList.size(); i++) {
                                         totalTime = arrayList.get(i).getDurationText();
                                         PolylineOptions polyOptions = new PolylineOptions();
                                         polyOptions.color(Color.BLUE);
@@ -384,19 +390,17 @@ public class HomeActivity extends AppCompatActivity implements
                             })
                             .build();
                     routing.execute();
-                }else if(requestInfo.getRequestStatus()== RequestStatus.DRIVER_GO_TO_END_POINT) {
-                    progress.setVisibility(View.VISIBLE);
-                    Toast.makeText(HomeActivity.this,R.string.waiting, Toast.LENGTH_SHORT).show();
+                } else if (requestInfo.getRequestStatus() == RequestStatus.DRIVER_GO_TO_END_POINT) {
                     setUserInfo(requestInfo);
                     container.setVisibility(View.VISIBLE);
                     btnArrived.setVisibility(View.INVISIBLE);
                     googleMap.clear();
                     setLocation();
-                    final LatLng startPointLocation = new LatLng(requestInfo.getStartPoint().getLat(),requestInfo.getStartPoint().getLng());
-                    final LatLng endPointLocation = new LatLng(requestInfo.getEndPoint().getLat(),requestInfo.getEndPoint().getLng());
+                    final LatLng startPointLocation = new LatLng(requestInfo.getStartPoint().getLat(), requestInfo.getStartPoint().getLng());
+                    final LatLng endPointLocation = new LatLng(requestInfo.getEndPoint().getLat(), requestInfo.getEndPoint().getLng());
                     Routing routing = new Routing.Builder()
                             .travelMode(Routing.TravelMode.DRIVING)
-                            .waypoints(startPointLocation,endPointLocation)
+                            .waypoints(startPointLocation, endPointLocation)
                             .withListener(new RoutingListener() {
                                 @Override
                                 public void onRoutingFailure(RouteException e) {
@@ -405,15 +409,14 @@ public class HomeActivity extends AppCompatActivity implements
 
                                 @Override
                                 public void onRoutingStart() {
-
                                 }
 
                                 @Override
                                 public void onRoutingSuccess(ArrayList<Route> arrayList, int shortestRouteIndex) {
-                                    ArrayList polylines =new ArrayList<>();
-                                    String totalTime="";
+                                    ArrayList polylines = new ArrayList<>();
+                                    String totalTime = "";
                                     //add route(s) to the map.
-                                    for (int i = 0; i <arrayList.size(); i++) {
+                                    for (int i = 0; i < arrayList.size(); i++) {
                                         totalTime = arrayList.get(i).getDurationText();
                                         PolylineOptions polyOptions = new PolylineOptions();
                                         polyOptions.color(Color.BLUE);
@@ -443,7 +446,22 @@ public class HomeActivity extends AppCompatActivity implements
                             })
                             .build();
                     routing.execute();
-                }else {
+                } else if(requestInfo.getRequestStatus() == RequestStatus.CANCEL_FROM_DRIVER){
+                    Toast.makeText(HomeActivity.this, R.string.driver_cancel, Toast.LENGTH_SHORT).show();
+                    googleMap.clear();
+                    container.setVisibility(View.GONE);
+                    progress.setVisibility(View.GONE);
+                    removeListenerOnCurrentRequest();
+                    removeCurrentRequest();
+                } else if(requestInfo.getRequestStatus() == RequestStatus.CANCEL_FROM_USER){
+                    Toast.makeText(HomeActivity.this, R.string.user_cancel, Toast.LENGTH_SHORT).show();
+                    googleMap.clear();
+                    container.setVisibility(View.GONE);
+                    progress.setVisibility(View.GONE);
+                    removeListenerOnCurrentRequest();
+                    removeCurrentRequest();
+                } else if(requestInfo.getRequestStatus() == RequestStatus.COMPLETE){
+                    Toast.makeText(HomeActivity.this, R.string.complete, Toast.LENGTH_SHORT).show();
                     googleMap.clear();
                     container.setVisibility(View.GONE);
                     progress.setVisibility(View.GONE);
@@ -459,29 +477,33 @@ public class HomeActivity extends AppCompatActivity implements
         };
         return currentRequestListener;
     }
-    private void addListenerOnCurrentRequest(){
+
+    private void addListenerOnCurrentRequest() {
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_REQUESTS)
                 .child(currentRequest).addValueEventListener(getListenerOnCurrentRequest());
     }
-    private void removeListenerOnCurrentRequest(){
-        if(currentRequestListener!=null)
+
+    private void removeListenerOnCurrentRequest() {
+        if (currentRequestListener != null)
             FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_REQUESTS)
-                .child(currentRequest).removeEventListener(currentRequestListener);
+                    .child(currentRequest).removeEventListener(currentRequestListener);
     }
 
-    public void removeCurrentRequest(){
+    public void removeCurrentRequest() {
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(driverId).child(FirebaseRoot.DB_CURRENT_REQUEST).setValue("");
-        currentRequest="";
+        currentRequest = "";
         setLocation();
     }
-    private void setUserInfo(RequestInfo userInfo){
+
+    private void setUserInfo(RequestInfo userInfo) {
         tvUserName.setText(userInfo.getUserName());
         tvUserPhone.setText(userInfo.getUserPhone());
-        if(!userInfo.getUserImage().isEmpty())
-            Utils.showImage(this,userInfo.getUserImage(),profileImage);
+        if (!userInfo.getUserImage().isEmpty())
+            Utils.showImage(this, userInfo.getUserImage(), profileImage);
     }
-    private String convertTimeToArabic(String time){
-        return time.replace("hours","ساعة").replace("mins","دقيقة");
+
+    private String convertTimeToArabic(String time) {
+        return time.replace("hours", "ساعة").replace("mins", "دقيقة");
     }
 }

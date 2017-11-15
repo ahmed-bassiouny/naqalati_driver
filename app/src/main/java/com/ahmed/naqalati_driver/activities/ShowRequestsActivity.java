@@ -1,10 +1,13 @@
 package com.ahmed.naqalati_driver.activities;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.ahmed.naqalati_driver.R;
 import com.ahmed.naqalati_driver.adapter.RequestAdapter;
@@ -14,6 +17,8 @@ import com.ahmed.naqalati_driver.model.RequestListener;
 import com.ahmed.naqalati_driver.model.FirebaseRoot;
 import com.ahmed.naqalati_driver.model.RequestInfo;
 import com.ahmed.naqalati_driver.model.RequestStatus;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,11 +33,13 @@ public class ShowRequestsActivity extends AppCompatActivity implements RequestLi
     private RecyclerView recyclerView;
     private String driverId;
     List<RequestInfo> requestInfoList;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_requests);
         recyclerView=findViewById(R.id.recycler);
+        progressBar=findViewById(R.id.progress);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         requestInfoList=new ArrayList<>();
@@ -75,17 +82,32 @@ public class ShowRequestsActivity extends AppCompatActivity implements RequestLi
 
     @Override
     public void accept(String userId) {
+        recyclerView.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_USER)
                 .child(userId).child(FirebaseRoot.DB_REQUEST_STATUS)
-                .setValue(RequestStatus.ACCEPT);
-        finish();
+                .setValue(RequestStatus.ACCEPT).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isComplete())
+                    finish();
+            }
+        });
     }
 
     @Override
     public void refuse(String userId) {
+        recyclerView.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_USER)
                 .child(userId).child(FirebaseRoot.DB_REQUEST_STATUS)
-                .setValue(RequestStatus.REFUSE);
-        finish();
+                .setValue(RequestStatus.REFUSE).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isComplete())
+                    finish();
+            }
+        });
+
     }
 }
