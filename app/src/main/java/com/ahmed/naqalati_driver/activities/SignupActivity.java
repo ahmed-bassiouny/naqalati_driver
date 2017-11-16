@@ -47,8 +47,8 @@ public class SignupActivity extends AppCompatActivity {
     private TextView tvChooseImage;
     private ProgressBar progress;
     private Button btnRegister;
-    private EditText etPhone, etPassword, etConfirmPassword, etName, etCarNumber;
-    private Spinner spCarType;
+    private EditText etPhone, etPassword, etConfirmPassword, etName,etUserId,etUserAddress;
+    private EditText etuserEdaraMeror,etWe7daMeror,etRo5esa,etRo5esaNumber;
     private final int requestLocationPermission = 123;
 
     private Uri photoUri;
@@ -81,9 +81,9 @@ public class SignupActivity extends AppCompatActivity {
                     etConfirmPassword.setError(getString(R.string.invalid_confirm_password));
                 } else if (etName.getText().toString().isEmpty()) {
                     etName.setError(getString(R.string.invalid_user_name));
-                } else if (etCarNumber.getText().toString().length() < 5) {
-                    etCarNumber.setError(getString(R.string.invalid_car_number));
-                } else {
+                } else if (etUserId.getText().toString().length()!=14) {
+                    etUserId.setError("برجاء ادخال رقم البطاقة بطريقة صحيحة");
+                }  else {
                     if (Utils.isNetworkConnected(SignupActivity.this)) {
                         startSignup();
                         signUp();
@@ -132,8 +132,12 @@ public class SignupActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_password);
         etConfirmPassword = findViewById(R.id.et_confirm_password);
         etName = findViewById(R.id.et_user_name);
-        etCarNumber = findViewById(R.id.et_car_number);
-        spCarType = findViewById(R.id.sp_car_type);
+        etuserEdaraMeror=findViewById(R.id.et_user_edara_meror);
+        etWe7daMeror=findViewById(R.id.et_we7da_meror);
+        etRo5esa=findViewById(R.id.et_ro5esa);
+        etRo5esaNumber=findViewById(R.id.et_ro5esa_number);
+        etUserId=findViewById(R.id.et_user_id);
+        etUserAddress=findViewById(R.id.et_user_address);
     }
 
     @Override
@@ -164,8 +168,10 @@ public class SignupActivity extends AppCompatActivity {
         driver.setUserAvatar(url);
         driver.setLat(0.0);
         driver.setLng(0.0);
-        driver.setCarNumber(etCarNumber.getText().toString());
-        driver.setCarType(getCarTypeFromSpinner(spCarType.getSelectedItemPosition()));
+        driver.setEdaraMeror(etuserEdaraMeror.getText().toString());
+        driver.setWe7detMeror(etWe7daMeror.getText().toString());
+        driver.setRo5esa(etRo5esa.getText().toString());
+        driver.setRo5esaNumber(etRo5esaNumber.getText().toString());
         driver.setCurrentRequest("");
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -219,21 +225,4 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    private CarType getCarTypeFromSpinner(int position) {
-        CarType result;
-        switch (position) {
-            case 0:
-                result = CarType.FULL;
-                break;
-            case 1:
-                result = CarType.MEDIUM;
-                break;
-            case 2:
-                result = CarType.SMALL;
-                break;
-            default:
-                result = CarType.FULL;
-        }
-        return result;
-    }
 }

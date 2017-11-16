@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:textDirection="rtl"
+    android:fillViewport="true"
+    android:layout_margin="10dp"
+    tools:context="com.ahmed.naqalati_driver.activities.PermissionActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:text="شروط استخدام التطبيق السائق"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:text="العالمية لخدمات النقل الداخلي  نقلتى وهى صاحبة تطبيق نقلتى الخاص بإدارة عملية نقل البضائع والسلع بين العملاء والسيارات من  مكان نقلة إلى مكان تسليمة وتتم هذة العملية عن طريق التطبيق إلكترونيا بين العملاء والسيارات وذلك عن طريق عرض طلب نقل من العميل على الشركة وتقوم الشركة بعرض هذا الطلب على الناقل أو صاحب السيارة مرسل فيه بيانات الحمولة كاملة ومكان التحميل ومكان التسليم والسعر وفى حالة قبول الناقل هذة العملية تكون بنود العقد ملزمة له وبعد أن أقر الطرفان بأهليتها الشرعية والنظامية للتعاقد والتصرف اتفقا على الآتي :"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:text="البند الأول : يعتبر التمهيد جزء لا يتجزأ من هذا العقد
+البند الثاني : اتفق الطرفان على ان يقوم الطرف الثاني بنقل البضائع الخاصة بعملاء الطرف الأول بسيارتة
+البند الثالث :اتفق الطرفان على أن يلتزم الطرف الأول بالقيام بإجراءات نقل  البضائع على سيارات الطرف الثاني بمصاريف يتحملها الطرف الأول جميعاً على عاتقه يلتزم الطرف الثاني بالقيام بإجراءات النقل بمصاريف على عاتق الطرف الأول مع إلتزام الطرف الناقل بالحفاظ على البضائع المنقولة
+البند الرابع :يقوم الطرف الثاني بتسليم البضائع للعميل  بمكان التسليم المتفق عليه  .
+البند الخامس :يقر الطرف الثاني بأنه قد عاين جميع البضائع محل النقل معاينة نافية للجهالة شرعاً ونظاماً واستلم جميع المستندات الخاصة بها."
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="البند السادس :يلتزم الطرف الثاني بالمحافظة على جميع البضائع محل النقل .
+البند السابع :يتحمل الطرف الثاني المسئولية كاملة عن ما ينجم للبضائع محل النقل من الهلاك أو التلف أو نقل أى أشياء مخالفة للقانون وكذلك يتحمل المسئولية كاملة في حالة التأخير في القيام بعملية التنفيذ أو في تسليم البضائع محل النقل
+البند الثامن:يقوم الطرف الثاني بتعويض الطرف الأول  بمبلغ يساوى قيمة المنقولات التالفة على سبيل التعويض في حالة تلف البضائع ، وكذلك يلتزم بالتعويض فى حالة الضرر الناتج عن  التأخير في تسليم البضائع ."
+            android:textSize="15sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15sp"
+            android:text="البند التاسع :يلتزم الطرف الثانى بأن يوصل للوكيل النسبة المتفق عليها وهى 10% من قيمة نولون رحلة النقل وتسليم النسبة لأقرب فرع للشركة"/>
+    </LinearLayout>
+
+</ScrollView>

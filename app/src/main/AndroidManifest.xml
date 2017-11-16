@@ -44,11 +44,18 @@
             android:name="io.fabric.ApiKey"
             android:value="a07905da1fb4c784f0369b04a71691297ca15843" />
 
-        <activity android:name=".activities.ShowRequestsActivity"
+        <activity
+            android:name=".activities.ShowRequestsActivity"
+            android:theme="@style/AppTheme.NoAction" />
+        <activity
+            android:name=".activities.ShowRequestDetailsActivity"
+            android:theme="@style/AppTheme.NoAction" />
+        <activity
+            android:name=".activities.EditProfileActivity"
+            android:theme="@style/AppTheme.NoAction" />
+        <activity android:name=".activities.NextRegisterActivity"
             android:theme="@style/AppTheme.NoAction"/>
-        <activity android:name=".activities.ShowRequestDetailsActivity"
-            android:theme="@style/AppTheme.NoAction"/>
-        <activity android:name=".activities.EditProfileActivity"
+        <activity android:name=".activities.PermissionActivity"
             android:theme="@style/AppTheme.NoAction"></activity>
     </application>
 

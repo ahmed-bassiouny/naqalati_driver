@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ahmed.naqalati_driver.helper.SharedPref;
 import com.ahmed.naqalati_driver.model.FirebaseRoot;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -86,8 +87,11 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser currentUser) {
-        if (currentUser != null) {
+        if (currentUser != null&& SharedPref.isUserSetFullData(this)) {
             startActivity(new Intent(SigninActivity.this, HomeActivity.class));
+            finish();
+        }else {
+            startActivity(new Intent(SigninActivity.this, NextRegisterActivity.class));
             finish();
         }
     }
