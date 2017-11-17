@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layoutDirection="rtl"
     android:textDirection="rtl"
-    tools:context="com.ahmed.naqalati_driver.activities.ShowRequestDetailsActivity">
+    tools:context="com.bassiouny.naqalati_driver.activities.ShowRequestDetailsActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_image"

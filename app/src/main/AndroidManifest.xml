@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.ahmed.naqalati_driver">
+    package="com.bassiouny.naqalati_driver">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -24,7 +24,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activities.SigninActivity"
+            android:name="com.bassiouny.naqalati_driver.activities.SigninActivity"
             android:theme="@style/AppTheme.NoAction">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,29 +33,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.SignupActivity"
+            android:name="com.bassiouny.naqalati_driver.activities.SignupActivity"
             android:theme="@style/AppTheme.NoAction" />
         <activity
-            android:name=".activities.HomeActivity"
+            android:name="com.bassiouny.naqalati_driver.activities.HomeActivity"
             android:theme="@style/AppTheme.NoAction" />
-        <activity android:name=".activities.ExpiredActivity" />
+        <activity android:name="com.bassiouny.naqalati_driver.activities.ExpiredActivity" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="a07905da1fb4c784f0369b04a71691297ca15843" />
 
         <activity
-            android:name=".activities.ShowRequestsActivity"
+            android:name="com.bassiouny.naqalati_driver.activities.ShowRequestsActivity"
             android:theme="@style/AppTheme.NoAction" />
         <activity
-            android:name=".activities.ShowRequestDetailsActivity"
+            android:name="com.bassiouny.naqalati_driver.activities.ShowRequestDetailsActivity"
             android:theme="@style/AppTheme.NoAction" />
         <activity
-            android:name=".activities.EditProfileActivity"
+            android:name="com.bassiouny.naqalati_driver.activities.EditProfileActivity"
             android:theme="@style/AppTheme.NoAction" />
-        <activity android:name=".activities.NextRegisterActivity"
+        <activity android:name="com.bassiouny.naqalati_driver.activities.NextRegisterActivity"
             android:theme="@style/AppTheme.NoAction"/>
-        <activity android:name=".activities.PermissionActivity"
+        <activity android:name="com.bassiouny.naqalati_driver.activities.PermissionActivity"
             android:theme="@style/AppTheme.NoAction"></activity>
     </application>
 

@@ -18,11 +18,11 @@ repositories {
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.ahmed.naqalati_driver"
+        applicationId "com.bassiouny.naqalati_driver"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 5
-        versionName "1.5"
+        versionCode 1
+        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

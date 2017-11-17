@@ -8,7 +8,7 @@
     android:fillViewport="true"
     android:layoutDirection="rtl"
     android:textDirection="rtl"
-    tools:context="com.ahmed.naqalati_driver.activities.SignupActivity">
+    tools:context="com.bassiouny.naqalati_driver.activities.SignupActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

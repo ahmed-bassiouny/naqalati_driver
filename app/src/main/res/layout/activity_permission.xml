@@ -8,7 +8,7 @@
     android:textDirection="rtl"
     android:fillViewport="true"
     android:layout_margin="10dp"
-    tools:context="com.ahmed.naqalati_driver.activities.PermissionActivity">
+    tools:context="com.bassiouny.naqalati_driver.activities.PermissionActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

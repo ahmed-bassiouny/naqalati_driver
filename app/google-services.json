@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "116129988296",
-    "firebase_url": "https://naqalati.firebaseio.com",
-    "project_id": "naqalati",
-    "storage_bucket": "naqalati.appspot.com"
+    "project_number": "474523517170",
+    "firebase_url": "https://naqalati-59e58.firebaseio.com",
+    "project_id": "naqalati-59e58",
+    "storage_bucket": "naqalati-59e58.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:116129988296:android:6a2a7a3b119d435c",
+        "mobilesdk_app_id": "1:474523517170:android:8bc1fb318965af69",
         "android_client_info": {
-          "package_name": "com.ntamtech.naqalati"
+          "package_name": "com.bassiouny.naqalati"
         }
       },
       "oauth_client": [
         {
-          "client_id": "116129988296-ervupv530sh4k7ob2kur7gh9ldgsrem9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ntamtech.naqalati",
-            "certificate_hash": "cd70e4b155cc34d401601319f88b8df59ab4058d"
-          }
-        },
-        {
-          "client_id": "116129988296-ek4nniph3s89q95am8bt6cho0871s88o.apps.googleusercontent.com",
+          "client_id": "474523517170-hr6co3h3c3naentimc3pe8bdb0b96sc4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAHYKwE-AC9Y0au2kNxCDtrZaXNTYSLGJ4"
+          "current_key": "AIzaSyAUJmZymAtbc8KqhA-tqs8yoffGMlDApDY"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "116129988296-ek4nniph3s89q95am8bt6cho0871s88o.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
@@ -52,28 +39,20 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:116129988296:android:c1345972f17cbae6",
+        "mobilesdk_app_id": "1:474523517170:android:19f77b07bb6dfd98",
         "android_client_info": {
-          "package_name": "com.ahmed.naqalati_driver"
+          "package_name": "com.bassiouny.naqalati_driver"
         }
       },
       "oauth_client": [
         {
-          "client_id": "116129988296-a2p5gdll0lurop3ksrbtg4mvtf4he2fl.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ahmed.naqalati_driver",
-            "certificate_hash": "cd70e4b155cc34d401601319f88b8df59ab4058d"
-          }
-        },
-        {
-          "client_id": "116129988296-ek4nniph3s89q95am8bt6cho0871s88o.apps.googleusercontent.com",
+          "client_id": "474523517170-hr6co3h3c3naentimc3pe8bdb0b96sc4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAHYKwE-AC9Y0au2kNxCDtrZaXNTYSLGJ4"
+          "current_key": "AIzaSyAUJmZymAtbc8KqhA-tqs8yoffGMlDApDY"
         }
       ],
       "services": {
@@ -81,13 +60,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "116129988296-ek4nniph3s89q95am8bt6cho0871s88o.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

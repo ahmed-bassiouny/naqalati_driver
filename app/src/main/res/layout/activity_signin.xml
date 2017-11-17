@@ -7,7 +7,7 @@
     android:background="@drawable/driver"
     android:layoutDirection="rtl"
     android:textDirection="rtl"
-    tools:context="com.ahmed.naqalati_driver.activities.SigninActivity">
+    tools:context="com.bassiouny.naqalati_driver.activities.SigninActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
