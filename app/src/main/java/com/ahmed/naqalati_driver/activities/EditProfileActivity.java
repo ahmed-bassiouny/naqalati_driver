@@ -140,10 +140,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 getEtUserName().setText(user.getUserName());
                 getEtCarNumber().setText(user.getCarNumber());
                 for(int i=0;i<carTypeSize; i++){
-                    if(carType[i].equals(user.getCarType()))
+                    if(carType[i].equals(user.getCarType())) {
                         spCarType.setSelection(i);
-                    Log.e("onDataChange", i+"" );
-                    break;
+                        break;
+                    }
                 }
                 if(!user.getUserAvatar().isEmpty())
                     Utils.showImage(EditProfileActivity.this,user.getUserAvatar(),profileImage);
