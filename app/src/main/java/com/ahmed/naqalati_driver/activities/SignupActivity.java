@@ -168,6 +168,7 @@ public class SignupActivity extends AppCompatActivity {
         driver.setRo5esa(etRo5esa.getText().toString());
         driver.setRo5esaNumber(etRo5esaNumber.getText().toString());
         driver.setCurrentRequest("");
+        driver.setAddress(etUserAddress.getText().toString());
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .setValue(driver).addOnCompleteListener(new OnCompleteListener<Void>() {
