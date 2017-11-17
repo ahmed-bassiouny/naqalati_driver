@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.ahmed.naqalati_driver.R;
 import com.ahmed.naqalati_driver.helper.SharedPref;
 import com.ahmed.naqalati_driver.helper.Utils;
-import com.ahmed.naqalati_driver.model.CarType;
 import com.ahmed.naqalati_driver.model.Driver;
 import com.ahmed.naqalati_driver.model.FirebaseRoot;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -100,7 +99,7 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         SharedPref.setFullData(NextRegisterActivity.this,true);
-                        startActivity(new Intent(NextRegisterActivity.this, HomeActivity.class));
+                        Toast.makeText(NextRegisterActivity.this, R.string.register_success, Toast.LENGTH_SHORT).show();
                         finish();
                     }else {
                         Utils.showErrorDialog(NextRegisterActivity.this,"ﻻ يمكن حفظ البيانات الان");
@@ -121,7 +120,7 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
         driver.setMotor(etMatorNumber.getText().toString());
         driver.setSize(etSize.getText().toString());
         driver.setModel(etCarModel.getText().toString());
-        driver.setCarType(getCarTypeFromSpinner(spCarType.getSelectedItemPosition()));
+        driver.setCarType(spCarType.getSelectedItem().toString());
     }
     private void getDriverId(){
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
@@ -146,8 +145,5 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
 
             }
         });
-    }
-    private CarType getCarTypeFromSpinner(int position) {
-        return CarType.values()[position];
     }
 }

@@ -20,11 +20,6 @@
     <string name="register_success">تم تسجيلك نجاح</string>
     <string name="car_number">رقم السيارة</string>
     <string name="car_type">نوع السيارة</string>
-    <array name="car_type_value">
-        <item>نقل</item>
-        <item>نص نقل</item>
-        <item>ربع نقل</item>
-    </array>
 
 
     <!-- general-->
@@ -57,4 +52,31 @@
     <string name="edit">تعديل</string>
     <string name="signout">خروج</string>
 
+    <array name="car_type_value">
+        <item>ونش انقاذ</item>
+        <item>كساحة</item>
+        <item>نقل لودر</item>
+        <item>ربع نقل صندوق مفتوح</item>
+        <item>ربع نقل صندوق مغلق</item>
+        <item>ربع نقل صندوق مبرد</item>
+        <item>نص نقل صندوق مفتوح</item>
+        <item>نص نقل صندوق مغلق</item>
+        <item>نص نقل صندوق مبرد</item>
+        <item>جرار قردانى قرش</item>
+        <item>جرار قردانى قلاب</item>
+        <item>جرار قردانى كنتر</item>
+        <item>تريلا قرش</item>
+        <item>تريلا كنتر</item>
+        <item>تريلا قلاب</item>
+        <item>تريلا جناب</item>
+        <item>تريلا مبرد</item>
+        <item>تريلا تنك</item>
+        <item>جرار قرش</item>
+        <item>جرار كنتر</item>
+        <item>جرار قلاب</item>
+        <item>حفار</item>
+        <item>حفار شكوش</item>
+        <item>ونش موبليا</item>
+        <item>معدات</item>
+    </array>
     </resources>

@@ -11,16 +11,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ahmed.naqalati_driver.model.CarType;
 import com.ahmed.naqalati_driver.model.Driver;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,7 +33,6 @@ import com.mvc.imagepicker.ImagePicker;
 import com.ahmed.naqalati_driver.R;
 import com.ahmed.naqalati_driver.helper.Utils;
 import com.ahmed.naqalati_driver.model.FirebaseRoot;
-import com.ahmed.naqalati_driver.model.User;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -82,7 +77,7 @@ public class SignupActivity extends AppCompatActivity {
                 } else if (etName.getText().toString().isEmpty()) {
                     etName.setError(getString(R.string.invalid_user_name));
                 } else if (etUserId.getText().toString().length()!=14) {
-                    etUserId.setError("برجاء ادخال رقم البطاقة بطريقة صحيحة");
+                    etUserId.setError("يجب ان يكون رقم البطاقة 14 رقم");
                 }  else {
                     if (Utils.isNetworkConnected(SignupActivity.this)) {
                         startSignup();
@@ -180,7 +175,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     stopSignup();
-                    Toast.makeText(SignupActivity.this, R.string.register_success, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(SignupActivity.this, NextRegisterActivity.class));
                     finish();
                 } else {
                     stopSignup();

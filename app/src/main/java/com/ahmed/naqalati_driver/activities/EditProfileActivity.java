@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -13,8 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ahmed.naqalati_driver.R;
+import com.ahmed.naqalati_driver.helper.SharedPref;
 import com.ahmed.naqalati_driver.helper.Utils;
-import com.ahmed.naqalati_driver.model.CarType;
 import com.ahmed.naqalati_driver.model.Driver;
 import com.ahmed.naqalati_driver.model.FirebaseRoot;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
@@ -43,6 +44,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private Uri photoUri;
     String driverId;
     Driver user;
+    String[] carType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +112,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                             @Override
                             public void exec() {
                                 FirebaseAuth.getInstance().signOut();
+                                SharedPref.setFullData(EditProfileActivity.this,false);
                                 startActivity(new Intent(EditProfileActivity.this, SigninActivity.class));
                                 finish();
                             }
@@ -124,6 +127,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         }
     }
     private void loadData() {
+        carType=getResources().getStringArray(R.array.car_type_value);
+        final int carTypeSize=carType.length;
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(driverId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -134,12 +139,12 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 user=dataSnapshot.getValue(Driver.class);
                 getEtUserName().setText(user.getUserName());
                 getEtCarNumber().setText(user.getCarNumber());
-                if(user.getCarType()==CarType.MEDIUM)
-                spCarType.setSelection(1);
-                else if(user.getCarType()==CarType.SMALL)
-                    spCarType.setSelection(2);
-                else
-                    spCarType.setSelection(0);
+                for(int i=0;i<carTypeSize; i++){
+                    if(carType[i].equals(user.getCarType()))
+                        spCarType.setSelection(i);
+                    Log.e("onDataChange", i+"" );
+                    break;
+                }
                 if(!user.getUserAvatar().isEmpty())
                     Utils.showImage(EditProfileActivity.this,user.getUserAvatar(),profileImage);
             }
@@ -180,7 +185,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private void updateName(){
         user.setUserName(getEtUserName().getText().toString());
         user.setCarNumber(getEtCarNumber().getText().toString());
-        user.setCarType(getCarTypeFromSpinner(spCarType.getSelectedItemPosition()));
+        user.setCarType(spCarType.getSelectedItem().toString());
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(driverId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -205,22 +210,5 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         super.onBackPressed();
         startActivity(new Intent(EditProfileActivity.this,HomeActivity.class));
         finish();
-    }
-    private CarType getCarTypeFromSpinner(int position) {
-        CarType result;
-        switch (position) {
-            case 0:
-                result = CarType.FULL;
-                break;
-            case 1:
-                result = CarType.MEDIUM;
-                break;
-            case 2:
-                result = CarType.SMALL;
-                break;
-            default:
-                result = CarType.FULL;
-        }
-        return result;
     }
 }

@@ -87,10 +87,10 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser currentUser) {
-        if (currentUser != null&& SharedPref.isUserSetFullData(this)) {
+        if (currentUser != null && SharedPref.isUserSetFullData(this)) {
             startActivity(new Intent(SigninActivity.this, HomeActivity.class));
             finish();
-        }else {
+        } else if (currentUser != null) {
             startActivity(new Intent(SigninActivity.this, NextRegisterActivity.class));
             finish();
         }
@@ -104,9 +104,10 @@ public class SigninActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            if (user.getDisplayName() != null && user.getDisplayName().equals(FirebaseRoot.DB_DRIVER))
+                            if (user.getDisplayName() != null && user.getDisplayName().equals(FirebaseRoot.DB_DRIVER)) {
+                                SharedPref.setFullData(SigninActivity.this, true);
                                 updateUI(user);
-                            else {
+                            } else {
                                 stopLogin();
                                 FirebaseAuth.getInstance().signOut();
                                 Utils.showErrorDialog(SigninActivity.this, getString(R.string.user_not_found));

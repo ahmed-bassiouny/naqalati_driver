@@ -8,7 +8,7 @@ import android.view.View;
 
 public class Driver extends User {
 
-    private CarType carType;
+    private String carType;
     private String carNumber;
     private String edaraMeror;
     private String we7detMeror;
@@ -25,11 +25,11 @@ public class Driver extends User {
     private String size;
     private String model;
 
-    public CarType getCarType() {
+    public String getCarType() {
         return carType;
     }
 
-    public void setCarType(CarType carType) {
+    public void setCarType(String carType) {
         this.carType = carType;
     }
 
