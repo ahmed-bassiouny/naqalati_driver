@@ -60,6 +60,11 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
                 startActivity(new Intent(NextRegisterActivity.this,PermissionActivity.class));
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getDriverId();
         loadData();
     }
@@ -131,6 +136,7 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
         }
     }
     private void loadData(){
+        Utils.showDialog(this);
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(driverId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -138,6 +144,7 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
                 if(dataSnapshot==null)
                     return;
                 driver=dataSnapshot.getValue(Driver.class);
+                Utils.dismissDialog();
             }
 
             @Override

@@ -21,8 +21,8 @@ android {
         applicationId "com.bassiouny.naqalati_driver"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -47,6 +47,7 @@ dependencies {
     compile 'com.github.jd-alexander:library:1.1.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'jp.wasabeef:glide-transformations:3.0.1'
+    compile 'cc.cloudist.acplibrary:library:1.2.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

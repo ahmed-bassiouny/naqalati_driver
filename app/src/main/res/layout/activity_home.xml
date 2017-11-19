@@ -28,9 +28,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="0"
+        android:textSize="20sp"
         android:padding="10dp"
         android:layout_alignParentLeft="true"
-        android:textColor="@color/black"
+        android:textColor="@color/red_logo"
         android:id="@+id/tv_request_count"
         android:background="@drawable/border_edit_text"/>
 
