@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -53,6 +54,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         profileImage = findViewById(R.id.profile_image);
         tvChooseImage = findViewById(R.id.tv_choose_image);
         spCarType = findViewById(R.id.sp_car_type);
+        ArrayAdapter mAdapter = ArrayAdapter.createFromResource(this, R.array.car_type_value,
+                android.R.layout.simple_spinner_dropdown_item);
+        spCarType.setAdapter(mAdapter);
         findViewById(R.id.btn_register).setOnClickListener(this);
         progress = findViewById(R.id.progress);
         findViewById(R.id.btn_singout).setOnClickListener(this);

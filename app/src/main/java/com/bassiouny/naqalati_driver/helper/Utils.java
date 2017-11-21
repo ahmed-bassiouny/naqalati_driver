@@ -62,6 +62,8 @@ public class Utils {
     }
 
     public static void showImage(Context context, String url, ImageView imageView) {
+        if(context ==null)
+            return;
         Glide.with(context).load(url)
                 .into(imageView);
     }

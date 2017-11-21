@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -41,6 +42,9 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next_register);
         spCarType = findViewById(R.id.sp_car_type);
+        ArrayAdapter mAdapter = ArrayAdapter.createFromResource(this, R.array.car_type_value,
+                android.R.layout.simple_spinner_dropdown_item);
+        spCarType.setAdapter(mAdapter);
         showPermission = findViewById(R.id.show_permission);
         progress = findViewById(R.id.progress);
         etOwnerName=findViewById(R.id.et_owner_name);
@@ -90,7 +94,7 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
         }else if(!accept.isChecked()){
             Toast.makeText(this, "يجرب الموافقة على شروط الاستخدام", Toast.LENGTH_LONG).show();
         }
-        else if(driver.getUserPhone()==null ||driver.getUserPhone().isEmpty()) {
+        else if(driver ==null || driver.getUserPhone()==null ||driver.getUserPhone().isEmpty()) {
             // check if driver contain data or empty
             Utils.showErrorDialog(this,"ﻻ يمكن حفظ البيانات الان");
         }else {
