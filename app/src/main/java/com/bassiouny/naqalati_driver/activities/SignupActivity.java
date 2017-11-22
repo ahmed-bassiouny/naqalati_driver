@@ -41,8 +41,8 @@ public class SignupActivity extends AppCompatActivity {
     private TextView tvChooseImage;
     private ProgressBar progress;
     private Button btnRegister;
-    private EditText etPhone, etPassword, etConfirmPassword, etName,etUserId,etUserAddress;
-    private EditText etuserEdaraMeror,etWe7daMeror,etRo5esa,etRo5esaNumber;
+    private EditText etPhone, etPassword, etConfirmPassword, etName, etUserId, etUserAddress;
+    private EditText etuserEdaraMeror, etWe7daMeror, etRo5esa, etRo5esaNumber, etUserEmail, etCode;
     private final int requestLocationPermission = 123;
 
     private Uri photoUri;
@@ -54,6 +54,15 @@ public class SignupActivity extends AppCompatActivity {
         findViewById();
         onClick();
         requestLocationPermission();
+        loadAgentCode();
+    }
+
+    private void loadAgentCode() {
+        // load data
+    }
+
+    private boolean checkCodeAgent(String code) {
+        return false;
     }
 
     private void requestLocationPermission() {
@@ -62,6 +71,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void onClick() {
+        // compare code
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,9 +85,11 @@ public class SignupActivity extends AppCompatActivity {
                     etConfirmPassword.setError(getString(R.string.invalid_confirm_password));
                 } else if (etName.getText().toString().isEmpty()) {
                     etName.setError(getString(R.string.invalid_user_name));
-                } else if (etUserId.getText().toString().length()!=14) {
+                } else if (etUserId.getText().toString().length() != 14) {
                     etUserId.setError("يجب ان يكون رقم البطاقة 14 رقم");
-                }  else {
+                } else if (!checkCodeAgent(etCode.getText().toString())) {
+                    etCode.setError("هذا الكود غير صحيح");
+                } else {
                     if (Utils.isNetworkConnected(SignupActivity.this)) {
                         startSignup();
                         signUp();
@@ -126,12 +138,14 @@ public class SignupActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_password);
         etConfirmPassword = findViewById(R.id.et_confirm_password);
         etName = findViewById(R.id.et_user_name);
-        etuserEdaraMeror=findViewById(R.id.et_user_edara_meror);
-        etWe7daMeror=findViewById(R.id.et_we7da_meror);
-        etRo5esa=findViewById(R.id.et_ro5esa);
-        etRo5esaNumber=findViewById(R.id.et_ro5esa_number);
-        etUserId=findViewById(R.id.et_user_id);
-        etUserAddress=findViewById(R.id.et_user_address);
+        etuserEdaraMeror = findViewById(R.id.et_user_edara_meror);
+        etWe7daMeror = findViewById(R.id.et_we7da_meror);
+        etRo5esa = findViewById(R.id.et_ro5esa);
+        etRo5esaNumber = findViewById(R.id.et_ro5esa_number);
+        etUserId = findViewById(R.id.et_user_id);
+        etUserAddress = findViewById(R.id.et_user_address);
+        etUserEmail = findViewById(R.id.et_user_email);
+        etCode = findViewById(R.id.et_code);
     }
 
     @Override
@@ -162,6 +176,8 @@ public class SignupActivity extends AppCompatActivity {
         driver.setUserAvatar(url);
         driver.setLat(0.0);
         driver.setLng(0.0);
+        driver.setEmail(etUserEmail.getText().toString());
+        driver.setCodeAgent(etCode.getText().toString());
         driver.setEdaraMeror(etuserEdaraMeror.getText().toString());
         driver.setWe7detMeror(etWe7daMeror.getText().toString());
         driver.setRo5esa(etRo5esa.getText().toString());

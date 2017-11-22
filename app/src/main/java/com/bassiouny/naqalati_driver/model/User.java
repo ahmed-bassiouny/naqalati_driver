@@ -15,6 +15,8 @@ public class User {
     private String currentRequest;
     private String numberID;
     private String address;
+    private String email;
+
 
     public String getUserName() {
         return userName;
@@ -97,4 +99,14 @@ public class User {
         this.address = address;
     }
 
+
+    public String getEmail() {
+        if(email==null)
+            email="";
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

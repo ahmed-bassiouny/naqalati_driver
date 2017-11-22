@@ -5,12 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bassiouny.naqalati_driver.helper.SharedPref;
+import com.bassiouny.naqalati_driver.model.Driver;
 import com.bassiouny.naqalati_driver.model.FirebaseRoot;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +22,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.bassiouny.naqalati_driver.R;
 import com.bassiouny.naqalati_driver.helper.Utils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -84,10 +90,34 @@ public class SigninActivity extends AppCompatActivity {
         updateUI(currentUser);
     }
 
-    private void updateUI(FirebaseUser currentUser) {
+    private void updateUI(final FirebaseUser currentUser) {
         if (currentUser != null && SharedPref.isUserSetFullData(this)) {
-            startActivity(new Intent(SigninActivity.this, HomeActivity.class));
-            finish();
+            Utils.showDialog(this);
+            FirebaseDatabase.getInstance().getReference().child(FirebaseRoot.DB_DRIVER)
+                    .child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot==null)
+                        return;
+                    Driver driver = dataSnapshot.getValue(Driver.class);
+                    if(driver==null)
+                        return;
+                    Utils.dismissDialog();
+                    Log.e( "onDataChange: ",currentUser.getUid() );
+                    if(driver.isAdminAccept()){
+                        startActivity(new Intent(SigninActivity.this, HomeActivity.class));
+                        finish();
+                    }else {
+                        startActivity(new Intent(SigninActivity.this, AcceptAdminActivity.class));
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         } else if (currentUser != null) {
             startActivity(new Intent(SigninActivity.this, NextRegisterActivity.class));
             finish();

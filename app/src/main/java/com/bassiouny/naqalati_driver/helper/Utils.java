@@ -118,7 +118,7 @@ public class Utils {
     }
 
     public static void dismissDialog() {
-        if (dialog != null)
+        if (dialog != null && dialog.isShowing())
             dialog.dismiss();
     }
 

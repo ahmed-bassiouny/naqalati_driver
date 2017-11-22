@@ -12,6 +12,8 @@ public class Driver extends User {
     private String we7detMeror;
     private String ro5esa;
     private String ro5esaNumber;
+    private boolean adminAccept;
+    private String codeAgent;
 
     // car
     private String carOwner;
@@ -135,4 +137,19 @@ public class Driver extends User {
         this.model = model;
     }
 
+    public boolean isAdminAccept() {
+        return adminAccept;
+    }
+
+    public void setAdminAccept(boolean adminAccept) {
+        this.adminAccept = adminAccept;
+    }
+
+    public String getCodeAgent() {
+        return codeAgent;
+    }
+
+    public void setCodeAgent(String codeAgent) {
+        this.codeAgent = codeAgent;
+    }
 }
