@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bassiouny.naqalati_driver.model.Agent;
 import com.bassiouny.naqalati_driver.model.Driver;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,7 +25,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -32,6 +36,8 @@ import com.mvc.imagepicker.ImagePicker;
 import com.bassiouny.naqalati_driver.R;
 import com.bassiouny.naqalati_driver.helper.Utils;
 import com.bassiouny.naqalati_driver.model.FirebaseRoot;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,6 +52,8 @@ public class SignupActivity extends AppCompatActivity {
     private final int requestLocationPermission = 123;
 
     private Uri photoUri;
+    private ArrayList<Agent> agentArrayList;
+    private boolean correctAgent=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +63,57 @@ public class SignupActivity extends AppCompatActivity {
         onClick();
         requestLocationPermission();
         loadAgentCode();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void loadAgentCode() {
         // load data
+        Utils.showDialog(this);
+        agentArrayList = new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference().child(FirebaseRoot.DB_AGENT)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot item : dataSnapshot.getChildren()) {
+                            if (item == null)
+                                return;
+                            Agent agent = item.getValue(Agent.class);
+                            agentArrayList.add(agent);
+                            Utils.dismissDialog();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Utils.dismissDialog();
+                    }
+                });
     }
 
-    private boolean checkCodeAgent(String code) {
-        return false;
+    private boolean checkCodeAgent(final String code) {
+        Utils.showDialog(this);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(Agent item:agentArrayList){
+                    if(item.getCode().equals(code)){
+                        correctAgent=true;
+                        break;
+                    }
+                }
+                SignupActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Utils.dismissDialog();
+                    }
+                });
+            }
+        }).start();
+        return correctAgent;
     }
 
     private void requestLocationPermission() {

@@ -8,6 +8,7 @@ public class FirebaseRoot {
     // Database
     public static final String DB_USER = "USER";
     public static final String DB_DRIVER = "DRIVER";
+    public static final String DB_AGENT = "AGENT";
     public static final String DB_REQUEST_STATUS = "RequestStatus";
     public static final String DB_REQUEST_STATUS_IN_REQUESTS = "requestStatus";
     public static final String DB_PENDING_REQUEST = "Pending_Request";

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
@@ -106,15 +107,16 @@ public class Utils {
         return lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
-    public static void showDialog(Context context) {
+    public static void showDialog(AppCompatActivity appCompatActivity) {
         if (dialog == null) {
-            dialog = new ACProgressFlower.Builder(context)
+            dialog = new ACProgressFlower.Builder(appCompatActivity)
                     .direction(ACProgressConstant.DIRECT_CLOCKWISE)
                     .themeColor(Color.WHITE)
                     .text("من فضلك انتظر")
                     .fadeColor(Color.DKGRAY).build();
         }
-        dialog.show();
+        if(!appCompatActivity.isDestroyed())
+            dialog.show();
     }
 
     public static void dismissDialog() {
