@@ -30,7 +30,6 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
 
     private String error="برجاء ادخال البيانات";
     private Spinner spCarType;
-    private TextView showPermission;
     private ProgressBar progress;
     private EditText etOwnerName,etOwnerPhone,city,etWe7damerorOwner,etCarNumber;
     private EditText etShaceh,etMatorNumber,etSize,etCarModel;
@@ -45,7 +44,6 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
         ArrayAdapter mAdapter = ArrayAdapter.createFromResource(this, R.array.car_type_value,
                 android.R.layout.simple_spinner_dropdown_item);
         spCarType.setAdapter(mAdapter);
-        showPermission = findViewById(R.id.show_permission);
         progress = findViewById(R.id.progress);
         etOwnerName=findViewById(R.id.et_owner_name);
         etOwnerPhone=findViewById(R.id.et_owner_phone);
