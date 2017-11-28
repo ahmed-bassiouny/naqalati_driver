@@ -48,7 +48,7 @@ public class SignupActivity extends AppCompatActivity {
     private ProgressBar progress;
     private Button btnRegister;
     private EditText etPhone, etPassword, etConfirmPassword, etName, etUserId, etUserAddress;
-    private EditText etuserEdaraMeror, etWe7daMeror, etRo5esa, etRo5esaNumber, etUserEmail, etCode;
+    private EditText etuserEdaraMeror, etWe7daMeror, etRo5esa, etRo5esaNumber, etUserEmail;//, etCode;
     private final int requestLocationPermission = 123;
 
     private Uri photoUri;
@@ -94,7 +94,7 @@ public class SignupActivity extends AppCompatActivity {
                 });
     }
 
-    private boolean checkCodeAgent(final String code) {
+   /* private boolean checkCodeAgent(final String code) {
         Utils.showDialog(this);
         new Thread(new Runnable() {
             @Override
@@ -114,7 +114,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         }).start();
         return correctAgent;
-    }
+    }*/
 
     private void requestLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED)
@@ -138,9 +138,9 @@ public class SignupActivity extends AppCompatActivity {
                     etName.setError(getString(R.string.invalid_user_name));
                 } else if (etUserId.getText().toString().length() != 14) {
                     etUserId.setError("يجب ان يكون رقم البطاقة 14 رقم");
-                } else if (!checkCodeAgent(etCode.getText().toString())) {
+                } /*else if (!checkCodeAgent(etCode.getText().toString())) {
                     etCode.setError("هذا الكود غير صحيح");
-                } else {
+                } */else {
                     if (Utils.isNetworkConnected(SignupActivity.this)) {
                         startSignup();
                         signUp();
@@ -196,7 +196,7 @@ public class SignupActivity extends AppCompatActivity {
         etUserId = findViewById(R.id.et_user_id);
         etUserAddress = findViewById(R.id.et_user_address);
         etUserEmail = findViewById(R.id.et_user_email);
-        etCode = findViewById(R.id.et_code);
+        //etCode = findViewById(R.id.et_code);
     }
 
     @Override
@@ -228,7 +228,8 @@ public class SignupActivity extends AppCompatActivity {
         driver.setLat(0.0);
         driver.setLng(0.0);
         driver.setEmail(etUserEmail.getText().toString());
-        driver.setCodeAgent(etCode.getText().toString());
+        driver.setCodeAgent("");
+        //driver.setCodeAgent(etCode.getText().toString());
         driver.setEdaraMeror(etuserEdaraMeror.getText().toString());
         driver.setWe7detMeror(etWe7daMeror.getText().toString());
         driver.setRo5esa(etRo5esa.getText().toString());

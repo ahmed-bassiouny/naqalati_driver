@@ -197,6 +197,7 @@
             android:lines="1"
             android:inputType="number"
             android:digits="0123456789"
+            android:visibility="gone"
             android:id="@+id/et_code"
             android:maxLines="1"
             android:minHeight="30dp"
