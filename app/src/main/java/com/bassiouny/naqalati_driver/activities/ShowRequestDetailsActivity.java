@@ -19,6 +19,7 @@ import com.bassiouny.naqalati_driver.model.RequestStatus;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -47,13 +48,14 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
         initObject();
         setData();
         onClick();
+        addListenerForRequest();
     }
 
     private void onClick() {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etPrice.getText().toString().trim().isEmpty()){
+                if(etPrice.getText().toString().trim().isEmpty() ||Integer.parseInt(etPrice.getText().toString())<=0){
                     Utils.showWarningDialog(ShowRequestDetailsActivity.this,"برجاء تحديد سعر النقلة");
                     return;
                 }else {
@@ -63,7 +65,6 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
                             .child(requestInfoKey).child(FirebaseRoot.DB_PRICE)
                             .setValue(etPrice.getText().toString());
                     llHint.setVisibility(View.VISIBLE);
-                    //addListenerOnRequest();
                 }
 
             }
@@ -106,45 +107,11 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
         btnRefuse = findViewById(R.id.btn_refuse);
         llHint = findViewById(R.id.ll_hint);
     }
-    private void addListenerOnRequest(){
-        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_REQUESTS)
-                .child(requestInfoKey).addValueEventListener(getListenerOnRequest());
-    }
-    private void removeListenerOnRequest(){
-        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_REQUESTS)
-                .child(requestInfoKey).removeEventListener(requestListener);
-    }
-    private ValueEventListener getListenerOnRequest(){
-        requestListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot==null)
-                    return;
-                requestInfo = dataSnapshot.getValue(RequestInfo.class);
-                if(requestInfo.getRequestStatus()==RequestStatus.ACCEPT){
-                    Toast.makeText(ShowRequestDetailsActivity.this, "تم الموافقة على السعر من قبل العميل", Toast.LENGTH_SHORT).show();
-                    finish();
-                }else if(requestInfo.getRequestStatus()==RequestStatus.REFUSE){
-                    Toast.makeText(ShowRequestDetailsActivity.this, "تم رفض السعر", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-        return requestListener;
-    }
 
     @Override
     protected void onStop() {
-        super.onStop();/*
-        removeListenerOnRequest();
-        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_USER)
-                .child(requestInfo.getUserId()).child(FirebaseRoot.DB_REQUEST_STATUS)
-                .setValue(RequestStatus.REFUSE);*/
+        super.onStop();
         cancelRequest();
     }
     private void cancelRequest(){
@@ -153,7 +120,41 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(FirebaseRoot.DB_PENDING_REQUEST)
                 .child(requestInfoKey).removeValue();
-        Toast.makeText(ShowRequestDetailsActivity.this, "تم الغاء الطلب", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+    }
+    private void addListenerForRequest(){
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(FirebaseRoot.DB_PENDING_REQUEST)
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 }
