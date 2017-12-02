@@ -6,4 +6,5 @@ package com.bassiouny.naqalati_driver.helper;
 
 public class Constant {
     public static final String SHOW_REQUEST_INFO_DETAILS = "show_request_info";
+    public static final String REQUEST_INFO_KEY = "request_info_key";
 }

@@ -33,6 +33,7 @@ public class ShowRequestsActivity extends AppCompatActivity implements RequestLi
     private RecyclerView recyclerView;
     private String driverId;
     List<RequestInfo> requestInfoList;
+    List<String>requestInfoKeyList;
     ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class ShowRequestsActivity extends AppCompatActivity implements RequestLi
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         requestInfoList=new ArrayList<>();
+        requestInfoKeyList=new ArrayList<>();
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
             Utils.ContactSuppot(this);
             finish();
@@ -62,8 +64,9 @@ public class ShowRequestsActivity extends AppCompatActivity implements RequestLi
                                 return;
                             RequestInfo requestInfo = snapshot.getValue(RequestInfo.class);
                             requestInfoList.add(requestInfo);
+                            requestInfoKeyList.add(snapshot.getKey());
                         }
-                        RequestAdapter requestAdapter = new RequestAdapter(requestInfoList,ShowRequestsActivity.this);
+                        RequestAdapter requestAdapter = new RequestAdapter(requestInfoList,requestInfoKeyList,ShowRequestsActivity.this);
                         recyclerView.setAdapter(requestAdapter);
                     }
 
@@ -74,13 +77,15 @@ public class ShowRequestsActivity extends AppCompatActivity implements RequestLi
                 });
     }
     @Override
-    public void showMore(RequestInfo requestInfo) {
+    public void showMore(RequestInfo requestInfo,String parentKey) {
         Intent intent = new Intent(ShowRequestsActivity.this,ShowRequestDetailsActivity.class);
         intent.putExtra(Constant.SHOW_REQUEST_INFO_DETAILS,requestInfo);
+        intent.putExtra(Constant.REQUEST_INFO_KEY,parentKey);
         startActivity(intent);
+        finish();
     }
 
-    @Override
+    /*@Override
     public void accept(String userId) {
         recyclerView.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
@@ -109,5 +114,5 @@ public class ShowRequestsActivity extends AppCompatActivity implements RequestLi
             }
         });
 
-    }
+    }*/
 }

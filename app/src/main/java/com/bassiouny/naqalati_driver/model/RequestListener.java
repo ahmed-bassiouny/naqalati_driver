@@ -5,7 +5,5 @@ package com.bassiouny.naqalati_driver.model;
  */
 
 public interface RequestListener {
-    void showMore(RequestInfo requestInfo);
-    void accept(String userId);
-    void refuse(String userId);
+    void showMore(RequestInfo requestInfo,String ParentKey);
 }

@@ -31,7 +31,7 @@
         android:textSize="15sp"
         android:id="@+id/tv_phone"
         android:layout_marginStart="10dp"/>
-    <TextView
+<!--    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/tv_phone"
@@ -42,25 +42,25 @@
         android:textSize="15sp"
         android:textColor="@color/black"
         android:id="@+id/tv_show_details"
-        android:layout_marginStart="10dp"/>
+        android:layout_marginStart="10dp"/>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2"
         android:layout_margin="15dp"
+        android:gravity="center"
         android:layout_toEndOf="@+id/profile_image"
         android:layout_below="@+id/tv_phone">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/yes"
+            android:text="@string/show_more"
             android:textStyle="bold"
+            android:padding="10dp"
             android:layout_margin="5dp"
-            android:id="@+id/btn_accept"
+            android:id="@+id/btn_show_details"
             android:textColor="@color/white"
             android:background="@drawable/border_button"/>
-        <Button
+   <!--     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no"
@@ -68,6 +68,6 @@
             android:layout_margin="5dp"
             android:id="@+id/btn_refuse"
             android:background="@drawable/border_button_white"
-            android:layout_weight="1"/>
+            android:layout_weight="1"/>-->
     </LinearLayout>
 </RelativeLayout>

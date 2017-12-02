@@ -24,28 +24,28 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHolder> {
 
     private List<RequestInfo> requestInfoList;
+    private List<String> requestInfoKeyList;
     private Context context;
     private RequestListener requestListener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvName, tvPhone ,tvShowDetails;
-        public Button btnAccept,btnRefuse;
+        public TextView tvName, tvPhone;
+        public Button btnShowDetails;
         public CircleImageView profileImage;
 
         public MyViewHolder(View view) {
             super(view);
             tvName = view.findViewById(R.id.tv_name);
             tvPhone = view.findViewById(R.id.tv_phone);
-            tvShowDetails =view.findViewById(R.id.tv_show_details);
+            btnShowDetails =view.findViewById(R.id.btn_show_details);
             profileImage=view.findViewById(R.id.profile_image);
-            btnAccept=view.findViewById(R.id.btn_accept);
-            btnRefuse=view.findViewById(R.id.btn_refuse);
         }
     }
 
 
-    public RequestAdapter(List<RequestInfo> requestInfoList,Context context) {
+    public RequestAdapter(List<RequestInfo> requestInfoList,List<String>requestInfoKeyList,Context context) {
         this.requestInfoList = requestInfoList;
+        this.requestInfoKeyList=requestInfoKeyList;
         this.context=context;
         this.requestListener = (RequestListener) context;
     }
@@ -61,26 +61,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.MyViewHo
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final RequestInfo requestInfo = requestInfoList.get(position);
+        final String key = requestInfoKeyList.get(position);
         holder.tvName.setText(requestInfo.getUserName());
         holder.tvPhone.setText(requestInfo.getUserPhone());
         if(!requestInfo.getUserImage().isEmpty())
             Utils.showImage(context,requestInfo.getUserImage(),holder.profileImage);
-        holder.tvShowDetails.setOnClickListener(new View.OnClickListener() {
+        holder.btnShowDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestListener.showMore(requestInfo);
-            }
-        });
-        holder.btnAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestListener.accept(requestInfo.getUserId());
-            }
-        });
-        holder.btnRefuse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestListener.refuse(requestInfo.getUserId());
+                requestListener.showMore(requestInfo,key);
             }
         });
     }
