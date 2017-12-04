@@ -29,14 +29,16 @@ public class RequestInfo implements Serializable {
     private Point startPoint;
     private Point endPoint;
     private String price;
+    private String productType;
+    private String productSize;
 
-    public void setUserInfo(String userId,String userName ,String userPhone, String userImage,Double userLat,Double userLng){
-        this.userId=userId;
-        this.userName=userName;
-        this.userPhone=userPhone;
-        this.userImage=userImage;
-        this.userLat=userLat;
-        this.userLng=userLng;
+    public void setUserInfo(String userId, String userName, String userPhone, String userImage, Double userLat, Double userLng) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userPhone = userPhone;
+        this.userImage = userImage;
+        this.userLat = userLat;
+        this.userLng = userLng;
     }
 
     public String getUserId() {
@@ -184,12 +186,32 @@ public class RequestInfo implements Serializable {
     }
 
     public String getPrice() {
-        if(price == null)
+        if (price == null)
             price = "0";
         return price;
     }
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getProductType() {
+        if (productType == null)
+            productType = "";
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public String getProductSize() {
+        if (productSize == null)
+            productSize = "";
+        return productSize;
+    }
+
+    public void setProductSize(String productSize) {
+        this.productSize = productSize;
     }
 }

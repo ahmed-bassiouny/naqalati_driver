@@ -38,8 +38,8 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
     private String requestInfoKey;
     private EditText etPrice;
     private Button btnAccept,btnRefuse;
-    private ValueEventListener requestListener;
     private LinearLayout llHint;
+    private TextView tvProductType,tvProductSize;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +85,8 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
         tvStartPoint.setText(requestInfo.getStartPoint().getLocationString());
         tvEndPoint.setText(requestInfo.getEndPoint().getLocationString());
         etPrice.setText(requestInfo.getPrice().toString());
+        tvProductType.append(requestInfo.getProductType());
+        tvProductSize.append(requestInfo.getProductSize());
     }
 
     private void initObject() {
@@ -106,6 +108,8 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
         btnAccept = findViewById(R.id.btn_accept);
         btnRefuse = findViewById(R.id.btn_refuse);
         llHint = findViewById(R.id.ll_hint);
+        tvProductType = findViewById(R.id.tv_product_type);
+        tvProductSize = findViewById(R.id.tv_product_size);
     }
 
 
@@ -115,7 +119,6 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
         cancelRequest();
     }
     private void cancelRequest(){
-
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(FirebaseRoot.DB_PENDING_REQUEST)
