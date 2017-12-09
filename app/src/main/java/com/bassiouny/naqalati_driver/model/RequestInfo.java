@@ -31,6 +31,7 @@ public class RequestInfo implements Serializable {
     private String price;
     private String productType;
     private String productSize;
+    private String date;
 
     public void setUserInfo(String userId, String userName, String userPhone, String userImage, Double userLat, Double userLng) {
         this.userId = userId;
@@ -213,5 +214,13 @@ public class RequestInfo implements Serializable {
 
     public void setProductSize(String productSize) {
         this.productSize = productSize;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
