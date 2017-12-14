@@ -87,20 +87,6 @@ public class Utils {
                 .show();
     }
 
-    public static void showNotificationAboutNewRequest(Context context) {
-        NotificationCompat.Builder n = new NotificationCompat.Builder(context, "default");
-        n.setContentTitle(context.getString(R.string.app_name));
-        n.setContentText(context.getString(R.string.new_request));
-        n.setSmallIcon(R.drawable.logo);
-        n.setDefaults(Notification.DEFAULT_SOUND);
-        n.setAutoCancel(true);
-
-
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0, n.build());
-    }
 
     public static boolean isGpsEnable(Context context) {
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -108,15 +94,19 @@ public class Utils {
     }
 
     public static void showDialog(AppCompatActivity appCompatActivity) {
-        if (dialog == null) {
-            dialog = new ACProgressFlower.Builder(appCompatActivity)
-                    .direction(ACProgressConstant.DIRECT_CLOCKWISE)
-                    .themeColor(Color.WHITE)
-                    .text("من فضلك انتظر")
-                    .fadeColor(Color.DKGRAY).build();
+        try {
+            if (dialog == null) {
+                dialog = new ACProgressFlower.Builder(appCompatActivity)
+                        .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                        .themeColor(Color.WHITE)
+                        .text("من فضلك انتظر")
+                        .fadeColor(Color.DKGRAY).build();
+            }
+            if (!appCompatActivity.isDestroyed())
+                dialog.show();
+        }catch (Exception e){
+
         }
-        if(!appCompatActivity.isDestroyed())
-            dialog.show();
     }
 
     public static void dismissDialog() {

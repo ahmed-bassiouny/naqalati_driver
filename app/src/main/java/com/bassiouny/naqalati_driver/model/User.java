@@ -16,6 +16,7 @@ public class User {
     private String numberID;
     private String address;
     private String email;
+    private String token;
 
 
     public String getUserName() {
@@ -108,5 +109,15 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getToken() {
+        if(token==null)
+            token="";
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

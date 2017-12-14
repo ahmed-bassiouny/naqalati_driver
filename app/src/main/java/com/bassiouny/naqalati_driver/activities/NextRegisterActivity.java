@@ -65,8 +65,8 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         getDriverId();
         loadData();
     }

@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 
 import com.bassiouny.naqalati_driver.helper.LocationManager;
+import com.bassiouny.naqalati_driver.helper.SharedPref;
 import com.bassiouny.naqalati_driver.helper.Utils;
 import com.bassiouny.naqalati_driver.model.Driver;
 import com.bassiouny.naqalati_driver.model.RequestInfo;
@@ -42,6 +44,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -89,6 +93,24 @@ public class HomeActivity extends AppCompatActivity implements
         findViewById();
         initObjects();
         onClick();
+        checkIfTokenUpdated();
+    }
+
+    private void checkIfTokenUpdated() {
+        Log.e("checkIfTokenUpdated: ", driverId);
+        if(!SharedPref.updatedToken(this)){
+            // this case mean i don't update token user in firebase so i will make request to update it
+            FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
+                    .child(driverId).child(FirebaseRoot.DB_TOKEN).setValue(SharedPref.getToken(this))
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                SharedPref.setUpdatedToken(HomeActivity.this);
+                            }
+                        }
+                    });
+        }
     }
 
     private void getInfoFromDB() {
@@ -256,8 +278,6 @@ public class HomeActivity extends AppCompatActivity implements
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
                     int requestSize = (int) dataSnapshot.getChildrenCount();
-                    if (requestSize > 0)
-                        Utils.showNotificationAboutNewRequest(HomeActivity.this);
                     tvRequestCount.setText(String.valueOf(requestSize));
                 } else {
                     tvRequestCount.setText("0");

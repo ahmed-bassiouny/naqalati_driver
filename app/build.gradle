@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:11.0.4'
     implementation 'com.google.firebase:firebase-database:11.0.4'
     implementation 'com.android.support:support-vector-drawable:26.1.0'
+    implementation 'com.google.firebase:firebase-messaging:11.0.4'
     compile 'com.github.blennerSilva:AwesomeDialog:2.0.5'
     compile 'com.github.Mariovc:ImagePicker:1.2.0'
     compile 'com.google.android.gms:play-services-maps:11.0.4'

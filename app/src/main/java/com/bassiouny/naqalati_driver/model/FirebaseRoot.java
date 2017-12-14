@@ -17,4 +17,5 @@ public class FirebaseRoot {
     public static final String DB_CURRENT_REQUEST="currentRequest";
     public static final String DB_REQUESTS = "REQUESTS";
     public static final String DB_PRICE = "price";
+    public static final String DB_TOKEN = "token";
 }
