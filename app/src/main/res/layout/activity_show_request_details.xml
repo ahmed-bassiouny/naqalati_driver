@@ -126,9 +126,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/border_button"
+                android:background="@drawable/border_button_green"
                 android:text="ارسال السعر"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <Button
@@ -137,7 +137,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/border_button_white"
+                android:background="@drawable/border_button"
+                android:textColor="@color/white"
                 android:text="@string/no"
                 android:textSize="20sp" />
 

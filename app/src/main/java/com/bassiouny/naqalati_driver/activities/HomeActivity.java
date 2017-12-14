@@ -97,7 +97,6 @@ public class HomeActivity extends AppCompatActivity implements
     }
 
     private void checkIfTokenUpdated() {
-        Log.e("checkIfTokenUpdated: ", driverId);
         if(!SharedPref.updatedToken(this)){
             // this case mean i don't update token user in firebase so i will make request to update it
             FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)

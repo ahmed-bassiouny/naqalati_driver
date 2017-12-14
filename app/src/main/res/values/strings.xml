@@ -78,6 +78,8 @@
         <item>حفار شكوش</item>
         <item>ونش موبليا</item>
         <item>معدات</item>
+        <item>اتوبيس خاص</item>
+        <item>اتوبيس رحلات</item>
     </array>
     <string name="title_activity_accept_admin">AcceptAdminActivity</string>
     <string name="title_home">Home</string>

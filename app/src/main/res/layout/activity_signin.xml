@@ -14,7 +14,6 @@
         android:layout_height="match_parent"
         android:layout_margin="20dp"
         android:gravity="center"
-        android:paddingTop="40dp"
         android:orientation="vertical">
 
         <ImageView
@@ -68,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/progress"/>
         <Button
             android:layout_width="200dp"
@@ -82,7 +81,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/tv_new_user"
             android:padding="10dp"
             android:textStyle="bold"
