@@ -49,6 +49,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tv_files:
                 startActivity(new Intent(HomeActivity.this,UploadFilesActivity.class));
                 break;
+            case R.id.tv_contact:
+            case R.id.iv_contact:
+                startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
+                break;
         }
     }
 }
