@@ -3,6 +3,7 @@ package com.bassiouny.naqalati_driver.activities;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -112,17 +113,20 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
         tvProductSize = findViewById(R.id.tv_product_size);
     }
 
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        cancelRequest();
-    }
     private void cancelRequest(){
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(FirebaseRoot.DB_PENDING_REQUEST)
                 .child(requestInfoKey).removeValue();
+
+        requestInfo.setDriverId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        requestInfo.setRequestStatus(RequestStatus.REFUSE_FROM_DRIVER);
+        // generate key for request
+        String key =FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_REQUESTS).push().getKey();
+        // update currentRequest in driver
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_REQUESTS).child(key)
+                .setValue(requestInfo);
+        Log.e( "cancelRequest: ",key );
         finish();
     }
 
