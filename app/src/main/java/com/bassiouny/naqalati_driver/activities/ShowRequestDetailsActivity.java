@@ -126,7 +126,6 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
         // update currentRequest in driver
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_REQUESTS).child(key)
                 .setValue(requestInfo);
-        Log.e( "cancelRequest: ",key );
         finish();
     }
 

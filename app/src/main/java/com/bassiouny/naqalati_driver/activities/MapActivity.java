@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bassiouny.naqalati_driver.helper.Constant;
 import com.bassiouny.naqalati_driver.helper.LocationManager;
 import com.bassiouny.naqalati_driver.helper.SharedPref;
 import com.bassiouny.naqalati_driver.helper.Utils;
@@ -443,6 +444,7 @@ public class MapActivity extends AppCompatActivity implements
                     googleMap.clear();
                     container.setVisibility(View.GONE);
                     progress.setVisibility(View.GONE);
+                    rateUser(currentRequest);
                     removeListenerOnCurrentRequest();
                     removeCurrentRequest();
                 } else if(requestInfo.getRequestStatus() == RequestStatus.CANCEL_FROM_USER){
@@ -450,6 +452,7 @@ public class MapActivity extends AppCompatActivity implements
                     googleMap.clear();
                     container.setVisibility(View.GONE);
                     progress.setVisibility(View.GONE);
+                    rateUser(currentRequest);
                     removeListenerOnCurrentRequest();
                     removeCurrentRequest();
                 } else if(requestInfo.getRequestStatus() == RequestStatus.COMPLETE){
@@ -457,6 +460,7 @@ public class MapActivity extends AppCompatActivity implements
                     googleMap.clear();
                     container.setVisibility(View.GONE);
                     progress.setVisibility(View.GONE);
+                    rateUser(currentRequest);
                     removeListenerOnCurrentRequest();
                     removeCurrentRequest();
                 }
@@ -497,5 +501,10 @@ public class MapActivity extends AppCompatActivity implements
 
     private String convertTimeToArabic(String time) {
         return time.replace("hours", "ساعة").replace("mins", "دقيقة");
+    }
+    private void rateUser(String request) {
+        Intent intent = new Intent(this,RateActivity.class);
+        intent.putExtra(Constant.REQUEST_ID,request);
+        startActivity(intent);
     }
 }
