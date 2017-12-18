@@ -17,6 +17,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvFiles;
     private ImageView ivContact;
     private TextView tvContact;
+    private ImageView ivMessage;
+    private TextView tvMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tvFiles = findViewById(R.id.tv_files);
         ivContact = findViewById(R.id.iv_contact);
         tvContact = findViewById(R.id.tv_contact);
+        ivMessage = findViewById(R.id.iv_message);
+        tvMessage = findViewById(R.id.tv_message);
 
         ivMap.setOnClickListener(this);
         tvMap.setOnClickListener(this);
@@ -36,22 +40,28 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tvFiles.setOnClickListener(this);
         ivContact.setOnClickListener(this);
         tvContact.setOnClickListener(this);
+        ivMessage.setOnClickListener(this);
+        tvMessage.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_map:
             case R.id.tv_map:
-                startActivity(new Intent(HomeActivity.this,MapActivity.class));
+                startActivity(new Intent(HomeActivity.this, MapActivity.class));
                 break;
             case R.id.iv_files:
             case R.id.tv_files:
-                startActivity(new Intent(HomeActivity.this,UploadFilesActivity.class));
+                startActivity(new Intent(HomeActivity.this, UploadFilesActivity.class));
                 break;
             case R.id.tv_contact:
             case R.id.iv_contact:
-                startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
+                startActivity(new Intent(HomeActivity.this, ContactUsActivity.class));
+                break;
+            case R.id.tv_message:
+            case R.id.iv_message:
+                startActivity(new Intent(HomeActivity.this, MessageActivity.class));
                 break;
         }
     }

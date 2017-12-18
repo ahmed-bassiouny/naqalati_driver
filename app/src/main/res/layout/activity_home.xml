@@ -84,5 +84,23 @@
             android:text="الاتصال بنا"
             android:textColor="@color/red_logo"
             android:textSize="20sp" />
+        <ImageView
+            android:id="@+id/iv_message"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_files"
+            android:src="@drawable/message" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/iv_message"
+            android:gravity="center_horizontal"
+            android:text="الرسائل الجديدة"
+            android:textColor="@color/red_logo"
+            android:textSize="20sp" />
     </RelativeLayout>
 </FrameLayout>

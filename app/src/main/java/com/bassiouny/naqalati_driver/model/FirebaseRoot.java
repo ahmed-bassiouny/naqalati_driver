@@ -19,4 +19,5 @@ public class FirebaseRoot {
     public static final String DB_PRICE = "price";
     public static final String DB_TOKEN = "token";
     public static final String DB_FILES = "FILES";
+    public static final String DB_MESSAGE = "MESSAGE";
 }
