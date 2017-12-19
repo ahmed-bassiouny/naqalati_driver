@@ -119,6 +119,10 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
                 .child(FirebaseRoot.DB_PENDING_REQUEST)
                 .child(requestInfoKey).removeValue();
 
+        // delete this request from all requests root
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_ALL_PENDING_REQUEST)
+                .child(requestInfoKey).removeValue();
+
         requestInfo.setDriverId(FirebaseAuth.getInstance().getCurrentUser().getUid());
         requestInfo.setRequestStatus(RequestStatus.REFUSE_FROM_DRIVER);
         // generate key for request
