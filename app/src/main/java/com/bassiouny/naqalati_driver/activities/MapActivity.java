@@ -97,7 +97,7 @@ public class MapActivity extends AppCompatActivity implements
     }
 
     private void checkIfTokenUpdated() {
-        if(!SharedPref.updatedToken(this)){
+        if(driverId !=null && !SharedPref.updatedToken(this)){
             // this case mean i don't update token user in firebase so i will make request to update it
             FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                     .child(driverId).child(FirebaseRoot.DB_TOKEN).setValue(SharedPref.getToken(this))

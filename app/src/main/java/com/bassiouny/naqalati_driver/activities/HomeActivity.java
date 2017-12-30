@@ -1,6 +1,8 @@
 package com.bassiouny.naqalati_driver.activities;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bassiouny.naqalati_driver.R;
+import com.crashlytics.android.Crashlytics;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -19,6 +22,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvContact;
     private ImageView ivMessage;
     private TextView tvMessage;
+    private TextView tvVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tvContact = findViewById(R.id.tv_contact);
         ivMessage = findViewById(R.id.iv_message);
         tvMessage = findViewById(R.id.tv_message);
+        tvVersion = findViewById(R.id.tv_version);
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            tvVersion.setText("نسخه رقم "+pInfo.versionName );
+        } catch (PackageManager.NameNotFoundException e) {
+            Crashlytics.logException(e);
+        }
 
         ivMap.setOnClickListener(this);
         tvMap.setOnClickListener(this);

@@ -36,6 +36,7 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
     private CheckBox accept;
     Driver driver;
     String driverId="";
+    private boolean activityRunning = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +71,19 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
         getDriverId();
         loadData();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        activityRunning = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        activityRunning = false;
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -143,10 +157,10 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
                 .child(driverId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot==null)
-                    return;
-                driver=dataSnapshot.getValue(Driver.class);
-                Utils.dismissDialog();
+                if(dataSnapshot!=null) {
+                    driver = dataSnapshot.getValue(Driver.class);
+                    Utils.dismissDialog(activityRunning);
+                }
             }
 
             @Override

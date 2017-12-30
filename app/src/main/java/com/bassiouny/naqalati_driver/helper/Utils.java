@@ -117,6 +117,10 @@ public class Utils {
         if (dialog != null && dialog.isShowing())
             dialog.dismiss();
     }
+    public static void dismissDialog(boolean activityRunning) {
+        if (activityRunning && dialog != null && dialog.isShowing())
+            dialog.dismiss();
+    }
     public static String getCurrentDate(){
         //                              day-months-year
         // this method return date today like 2017-2-19
