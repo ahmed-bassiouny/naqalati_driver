@@ -5,12 +5,16 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bassiouny.naqalati_driver.R;
+import com.bassiouny.naqalati_driver.model.FirebaseRoot;
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,6 +57,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tvContact.setOnClickListener(this);
         ivMessage.setOnClickListener(this);
         tvMessage.setOnClickListener(this);
+        disconnectWithFirebase();
     }
 
     @Override
@@ -75,5 +80,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(HomeActivity.this, MessageActivity.class));
                 break;
         }
+    }
+    private void disconnectWithFirebase(){
+        String driverId= FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.e("disconnectWi: ",driverId );
+        FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
+                .child(driverId).child("online").onDisconnect().setValue(false);
     }
 }

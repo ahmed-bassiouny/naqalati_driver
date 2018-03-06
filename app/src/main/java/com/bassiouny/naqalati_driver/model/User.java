@@ -17,6 +17,7 @@ public class User {
     private String address;
     private String email;
     private String token;
+    private Boolean isOnline;
 
 
     public String getUserName() {
@@ -119,5 +120,15 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public boolean isOnline() {
+        if(isOnline == null)
+            return false;
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
     }
 }

@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bassiouny.naqalati_driver.R;
@@ -45,6 +46,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     String driverId;
     Driver user;
     String[] carType;
+    private Switch isOnline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         profileImage = findViewById(R.id.profile_image);
         tvChooseImage = findViewById(R.id.tv_choose_image);
         spCarType = findViewById(R.id.sp_car_type);
+        isOnline = findViewById(R.id.is_online);
         ArrayAdapter mAdapter = ArrayAdapter.createFromResource(this, R.array.car_type_value,
                 android.R.layout.simple_spinner_dropdown_item);
         spCarType.setAdapter(mAdapter);
@@ -142,6 +145,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 user=dataSnapshot.getValue(Driver.class);
                 getEtUserName().setText(user.getUserName());
                 getEtCarNumber().setText(user.getCarNumber());
+                isOnline.setChecked(user.isOnline());
                 for(int i=0;i<carTypeSize; i++){
                     if(carType[i].equals(user.getCarType())) {
                         spCarType.setSelection(i);
@@ -189,6 +193,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         user.setUserName(getEtUserName().getText().toString());
         user.setCarNumber(getEtCarNumber().getText().toString());
         user.setCarType(spCarType.getSelectedItem().toString());
+        user.setOnline(isOnline.isChecked());
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(driverId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

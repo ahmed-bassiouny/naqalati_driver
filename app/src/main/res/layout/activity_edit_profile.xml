@@ -90,6 +90,13 @@
                 android:layout_margin="10dp">
             </Spinner>
         </LinearLayout>
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="متاح الان "
+            android:id="@+id/is_online"
+            android:padding="5dp"/>
         <Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"

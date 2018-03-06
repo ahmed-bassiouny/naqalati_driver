@@ -80,6 +80,12 @@
         <item>معدات</item>
         <item>اتوبيس خاص</item>
         <item>اتوبيس رحلات</item>
+        <item>جرار فردانى تانك</item>
+        <item>نص نقل جامبو</item>
+        <item>تروسيكل نقل</item>
+        <item>سوزوكى نقل</item>
+        <item>نقل عفش</item>
+        <item>جامبو تانك</item>
     </array>
     <string name="title_activity_accept_admin">AcceptAdminActivity</string>
     <string name="title_home">Home</string>

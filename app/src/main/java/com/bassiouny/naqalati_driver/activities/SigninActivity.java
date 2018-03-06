@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bassiouny.naqalati_driver.helper.SharedPref;
 import com.bassiouny.naqalati_driver.model.Driver;
@@ -115,7 +116,8 @@ public class SigninActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
+                    Utils.dismissDialog();
+                    Toast.makeText(SigninActivity.this, "حدث خطا ما", Toast.LENGTH_SHORT).show();
                 }
             });
         } else if (currentUser != null) {
