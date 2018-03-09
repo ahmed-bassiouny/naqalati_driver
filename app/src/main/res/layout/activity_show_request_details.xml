@@ -112,6 +112,13 @@
             android:id="@+id/tv_product_size"
             android:textColor="@color/black"
             android:textSize="20sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:id="@+id/tv_employee_number"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"

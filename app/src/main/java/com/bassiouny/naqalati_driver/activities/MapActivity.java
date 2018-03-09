@@ -157,6 +157,9 @@ public class MapActivity extends AppCompatActivity implements
                 FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_REQUESTS)
                         .child(currentRequest).child(FirebaseRoot.DB_REQUEST_STATUS_IN_REQUESTS)
                         .setValue(RequestStatus.DRIVER_GO_TO_END_POINT);
+                FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_REQUESTS)
+                        .child(currentRequest).child("endRequestDate")
+                        .setValue(Utils.getCurrentDate());
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +169,9 @@ public class MapActivity extends AppCompatActivity implements
                 FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_REQUESTS)
                         .child(currentRequest).child(FirebaseRoot.DB_REQUEST_STATUS_IN_REQUESTS)
                         .setValue(RequestStatus.CANCEL_FROM_DRIVER);
+                FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_REQUESTS)
+                        .child(currentRequest).child("endRequestDate")
+                        .setValue(Utils.getCurrentDate());
             }
         });
     }

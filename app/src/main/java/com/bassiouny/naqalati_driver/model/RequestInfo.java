@@ -32,6 +32,8 @@ public class RequestInfo implements Serializable {
     private String productType;
     private String productSize;
     private String date;
+    private String employeeNumber;
+    private String endRequestDate;
 
     public void setUserInfo(String userId, String userName, String userPhone, String userImage, Double userLat, Double userLng) {
         this.userId = userId;
@@ -222,5 +224,22 @@ public class RequestInfo implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+    public String getEmployeeNumber() {
+        if(employeeNumber == null)
+            return "0";
+        return employeeNumber;
+    }
+
+    public void setEmployeeNumber(String employeeNumber) {
+        this.employeeNumber = employeeNumber;
+    }
+
+    public String getEndRequestDate() {
+        return endRequestDate;
+    }
+
+    public void setEndRequestDate(String endRequestDate) {
+        this.endRequestDate = endRequestDate;
     }
 }

@@ -3,6 +3,7 @@ package com.bassiouny.naqalati_driver.firebase;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -24,9 +25,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder n = new NotificationCompat.Builder(this, "default");
         n.setContentTitle(getString(R.string.app_name));
         n.setContentText(body);
-        n.setSmallIcon(R.drawable.logo);
         n.setDefaults(Notification.DEFAULT_SOUND);
         n.setAutoCancel(true);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            n.setSmallIcon(R.drawable.logo);
+        } else {
+            n.setSmallIcon(R.drawable.logo);
+        }
 
 
         NotificationManager notificationManager =

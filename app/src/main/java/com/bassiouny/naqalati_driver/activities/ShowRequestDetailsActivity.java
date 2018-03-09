@@ -40,7 +40,7 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
     private EditText etPrice;
     private Button btnAccept,btnRefuse;
     private LinearLayout llHint;
-    private TextView tvProductType,tvProductSize;
+    private TextView tvProductType,tvProductSize,tvEmployeeNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +88,8 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
         etPrice.setText(requestInfo.getPrice().toString());
         tvProductType.append(requestInfo.getProductType());
         tvProductSize.append(requestInfo.getProductSize());
+        if(!requestInfo.getEmployeeNumber().equals("0"))
+            tvEmployeeNumber.setText(" عدد العمال  : "+ requestInfo.getEmployeeNumber());
     }
 
     private void initObject() {
@@ -111,6 +113,7 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
         llHint = findViewById(R.id.ll_hint);
         tvProductType = findViewById(R.id.tv_product_type);
         tvProductSize = findViewById(R.id.tv_product_size);
+        tvEmployeeNumber =  findViewById(R.id.tv_employee_number);
     }
 
     private void cancelRequest(){
