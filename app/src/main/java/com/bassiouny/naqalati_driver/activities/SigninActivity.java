@@ -98,11 +98,17 @@ public class SigninActivity extends AppCompatActivity {
                     .child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot==null)
+                    if(dataSnapshot==null){
+                        Utils.dismissDialog();
+                        Utils.ContactSuppot(SigninActivity.this);
                         return;
+                    }
                     Driver driver = dataSnapshot.getValue(Driver.class);
-                    if(driver==null)
+                    if(driver==null){
+                        Utils.dismissDialog();
+                        Utils.ContactSuppot(SigninActivity.this);
                         return;
+                    }
                     Utils.dismissDialog();
                     Log.e( "onDataChange: ",currentUser.getUid() );
                     if(driver.isAdminAccept()){
