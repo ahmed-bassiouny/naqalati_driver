@@ -24,6 +24,7 @@ public class Driver extends User {
     private String motor;
     private String size;
     private String model;
+    private String licenseDate;
 
     public String getCarType() {
         if(carType==null)
@@ -153,5 +154,15 @@ public class Driver extends User {
 
     public void setCodeAgent(String codeAgent) {
         this.codeAgent = codeAgent;
+    }
+
+    public String getLicenseDate() {
+        if(licenseDate == null)
+            licenseDate = "";
+        return licenseDate;
+    }
+
+    public void setLicenseDate(String licenseDate) {
+        this.licenseDate = licenseDate;
     }
 }

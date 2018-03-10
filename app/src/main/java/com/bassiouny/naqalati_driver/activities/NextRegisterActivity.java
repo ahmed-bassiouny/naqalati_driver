@@ -25,14 +25,18 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-public class NextRegisterActivity extends AppCompatActivity implements View.OnClickListener{
+import java.util.Calendar;
+import java.util.Locale;
+
+public class NextRegisterActivity extends AppCompatActivity implements View.OnClickListener,DatePickerDialog.OnDateSetListener{
 
     private String error="برجاء ادخال البيانات";
     private Spinner spCarType;
     private ProgressBar progress;
     private EditText etOwnerName,etOwnerPhone,city,etWe7damerorOwner,etCarNumber;
-    private EditText etShaceh,etMatorNumber,etSize,etCarModel;
+    private EditText etShaceh,etMatorNumber,etSize,etCarModel,etLicenseDate;
     private CheckBox accept;
     Driver driver;
     String driverId="";
@@ -56,11 +60,26 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
         etSize=findViewById(R.id.et_size);
         etCarModel=findViewById(R.id.et_car_model);
         accept=findViewById(R.id.accept);
+        etLicenseDate = findViewById(R.id.et_license_date);
         findViewById(R.id.btn_register).setOnClickListener(this);
         findViewById(R.id.show_permission).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(NextRegisterActivity.this,PermissionActivity.class));
+            }
+        });
+        etLicenseDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar now = Calendar.getInstance();
+                DatePickerDialog dpd = DatePickerDialog.newInstance(
+                        NextRegisterActivity.this,
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)
+                );
+                dpd.setLocale(Locale.getDefault());
+                dpd.show(getFragmentManager(), "Datepickerdialog");
             }
         });
     }
@@ -89,20 +108,16 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         if(!Utils.isNetworkConnected(this)){
             Utils.showWarningDialog(NextRegisterActivity.this, getString(R.string.check_internet));
-            return;
-        }
-        else if(etOwnerName.getText().toString().isEmpty()){
+        }else if(etOwnerName.getText().toString().isEmpty()){
             etOwnerName.setError(error);
-            return;
         }else if(etOwnerPhone.getText().toString().length()!=11){
             etOwnerPhone.setError(error);
-            return;
         }else if(etCarNumber.getText().toString().isEmpty()){
             etCarNumber.setError(error);
-            return;
-        }else if(etSize.getText().toString().isEmpty()){
+        }else if(etSize.getText().toString().isEmpty()) {
             etSize.setError(error);
-            return;
+        }else if(etLicenseDate.getText().toString().trim().isEmpty()){
+            etLicenseDate.setError(error);
         }else if(!accept.isChecked()){
             Toast.makeText(this, "يجرب الموافقة على شروط الاستخدام", Toast.LENGTH_LONG).show();
         }
@@ -142,6 +157,7 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
         driver.setSize(etSize.getText().toString());
         driver.setModel(etCarModel.getText().toString());
         driver.setCarType(spCarType.getSelectedItem().toString());
+        driver.setLicenseDate(etLicenseDate.getText().toString());
     }
     private void getDriverId(){
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
@@ -168,5 +184,10 @@ public class NextRegisterActivity extends AppCompatActivity implements View.OnCl
 
             }
         });
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        etLicenseDate.setText(year+"-"+monthOfYear+"-"+dayOfMonth);
     }
 }

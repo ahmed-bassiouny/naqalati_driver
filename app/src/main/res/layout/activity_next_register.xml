@@ -157,6 +157,20 @@
             android:maxLines="1"
             android:minHeight="30dp"
             android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/et_license_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/border_edit_text"
+            android:lines="1"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            android:hint="تاريخ انتهاء الرخصه"
+            android:maxLines="1"
+            android:minHeight="30dp"
+            android:padding="10dp" />
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
