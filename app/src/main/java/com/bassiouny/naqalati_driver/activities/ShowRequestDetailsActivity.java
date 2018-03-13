@@ -86,8 +86,15 @@ public class ShowRequestDetailsActivity extends AppCompatActivity {
         tvStartPoint.setText(requestInfo.getStartPoint().getLocationString());
         tvEndPoint.setText(requestInfo.getEndPoint().getLocationString());
         etPrice.setText(requestInfo.getPrice().toString());
-        tvProductType.append(requestInfo.getProductType());
-        tvProductSize.append(requestInfo.getProductSize());
+        if(requestInfo.getCarType().equals("اتوبيس خاص")||requestInfo.getCarType().equals("اتوبيس رحلات")){
+            tvProductType.setVisibility(View.GONE);
+            tvProductSize.setText(" عدد الركاب  : "+requestInfo.getProductSize());
+        }else {
+            tvProductType.setVisibility(View.VISIBLE);
+            tvProductType.append(requestInfo.getProductType());
+            tvProductSize.append(requestInfo.getProductSize());
+        }
+
         if(!requestInfo.getEmployeeNumber().equals("0"))
             tvEmployeeNumber.setText(" عدد العمال  : "+ requestInfo.getEmployeeNumber());
     }
