@@ -48,6 +48,17 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     String[] carType;
     private Switch isOnline;
 
+
+    private EditText etUserName;
+    private EditText etCarNumber;
+    private EditText etUserEmail;
+    private EditText etUserEdaraMeror;
+    private EditText etWe7daMeror;
+    private EditText etRo5esa;
+    private EditText etRo5esaNumber;
+    private EditText etUserId;
+    private EditText etUserAddress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +68,19 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         tvChooseImage = findViewById(R.id.tv_choose_image);
         spCarType = findViewById(R.id.sp_car_type);
         isOnline = findViewById(R.id.is_online);
+
+        etUserName = findViewById(R.id.et_user_name);
+        etCarNumber = findViewById(R.id.et_car_number);
+        etUserEmail = findViewById(R.id.et_user_email);
+        etUserEdaraMeror = findViewById(R.id.et_user_edara_meror);
+        etWe7daMeror = findViewById(R.id.et_we7da_meror);
+        etRo5esa = findViewById(R.id.et_ro5esa);
+        etRo5esaNumber = findViewById(R.id.et_ro5esa_number);
+        etUserId = findViewById(R.id.et_user_id);
+        etUserAddress = findViewById(R.id.et_user_address);
+        spCarType = findViewById(R.id.sp_car_type);
+
+
         ArrayAdapter mAdapter = ArrayAdapter.createFromResource(this, R.array.car_type_value,
                 android.R.layout.simple_spinner_dropdown_item);
         spCarType.setAdapter(mAdapter);
@@ -73,20 +97,15 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
-    private EditText getEtUserName(){
-        return (EditText) findViewById(R.id.et_user_name);
-    }
-
-    private EditText getEtCarNumber(){
-        return (EditText) findViewById(R.id.et_car_number);
-    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_register:
-                if(getEtUserName().getText().toString().trim().isEmpty())
+                if(etUserName.getText().toString().trim().isEmpty())
                     return;
-                else if(getEtCarNumber().getText().toString().trim().isEmpty())
+                else if(etCarNumber.getText().toString().trim().isEmpty())
+                    return;
+                else if(etUserId.getText().toString().trim().isEmpty())
                     return;
                 else {
                     progress.setVisibility(View.VISIBLE);
@@ -142,9 +161,16 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 progress.setVisibility(View.GONE);
                 if(dataSnapshot==null)
                     finish();
-                user=dataSnapshot.getValue(Driver.class);
-                getEtUserName().setText(user.getUserName());
-                getEtCarNumber().setText(user.getCarNumber());
+                user = dataSnapshot.getValue(Driver.class);
+                etUserName.setText(user.getUserName());
+                etCarNumber.setText(user.getCarNumber());
+                etUserEmail.setText(user.getEmail());
+                etUserEdaraMeror.setText(user.getEdaraMeror());
+                etWe7daMeror.setText(user.getWe7detMeror());
+                etRo5esa.setText(user.getRo5esa());
+                etRo5esaNumber.setText(user.getRo5esaNumber());
+                etUserId.setText(user.getNumberID());
+                etUserAddress.setText(user.getAddress());
                 isOnline.setChecked(user.isOnline());
                 for(int i=0;i<carTypeSize; i++){
                     if(carType[i].equals(user.getCarType())) {
@@ -190,9 +216,18 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         });
     }
     private void updateName(){
-        user.setUserName(getEtUserName().getText().toString());
-        user.setCarNumber(getEtCarNumber().getText().toString());
+        user.setUserName(etUserName.getText().toString());
+        user.setCarNumber(etCarNumber.getText().toString());
         user.setCarType(spCarType.getSelectedItem().toString());
+
+        user.setEmail(etUserEmail.getText().toString());
+        user.setEdaraMeror(etUserEdaraMeror.getText().toString());
+        user.setWe7detMeror(etWe7daMeror.getText().toString());
+        user.setRo5esa(etRo5esa.getText().toString());
+        user.setRo5esaNumber(etRo5esaNumber.getText().toString());
+        user.setNumberID(etUserId.getText().toString());
+        user.setAddress(etUserAddress.getText().toString());
+
         user.setOnline(isOnline.isChecked());
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(driverId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {

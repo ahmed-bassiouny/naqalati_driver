@@ -1,5 +1,7 @@
 package com.bassiouny.naqalati_driver.model;
 
+import com.bassiouny.naqalati_driver.helper.Utils;
+
 import java.io.Serializable;
 
 /**
@@ -125,6 +127,8 @@ public class RequestInfo implements Serializable {
     }
 
     public String getCarType() {
+        if(carType == null)
+            carType = "";
         return carType;
     }
 

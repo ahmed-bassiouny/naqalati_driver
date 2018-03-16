@@ -40,6 +40,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:text=""
+            android:visibility="gone"
             android:textSize="15sp"
             tools:text="01235894653" />
 
