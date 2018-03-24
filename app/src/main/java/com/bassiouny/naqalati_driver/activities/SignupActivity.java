@@ -237,6 +237,7 @@ public class SignupActivity extends AppCompatActivity {
         driver.setCurrentRequest("");
         driver.setNumberID(etUserId.getText().toString());
         driver.setAddress(etUserAddress.getText().toString());
+        driver.setOnline(true);
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .setValue(driver).addOnCompleteListener(new OnCompleteListener<Void>() {

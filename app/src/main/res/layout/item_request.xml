@@ -28,6 +28,7 @@
         android:layout_toEndOf="@+id/profile_image"
         android:layout_below="@+id/tv_name"
         tools:text="0123456789"
+        android:visibility="gone"
         android:textSize="15sp"
         android:id="@+id/tv_phone"
         android:layout_marginStart="10dp"/>

@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tvContact.setOnClickListener(this);
         ivMessage.setOnClickListener(this);
         tvMessage.setOnClickListener(this);
-        disconnectWithFirebase();
+        //disconnectWithFirebase();
     }
 
     @Override
@@ -81,10 +81,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-    private void disconnectWithFirebase(){
+    /*private void disconnectWithFirebase(){
         String driverId= FirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.e("disconnectWi: ",driverId );
         FirebaseDatabase.getInstance().getReference(FirebaseRoot.DB_DRIVER)
                 .child(driverId).child("online").onDisconnect().setValue(false);
-    }
+    }*/
 }
